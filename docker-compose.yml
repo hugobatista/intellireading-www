@@ -1,0 +1,18 @@
+---
+version: '3'
+services:
+
+  #-------------------------------------------------------------------
+  # intellireading-www is a nginx server that serves static files
+  intellireading-www: 
+    container_name: intellireading-www
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: "no"
+    volumes:
+      - ./log:/var/log/www
+      - ./config/dev/config.js:/usr/share/nginx/html/js/config.js
+    image: intellireading-www
+    ports:
+      - 8080:80

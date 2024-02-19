@@ -1,0 +1,46 @@
+---
+name: Deploy-> www-> Prod (clouflare pages)
+# yamllint disable rule:line-length
+
+on:
+  release:
+    types: [released]
+  workflow_dispatch:
+
+
+# set the run-name 
+run-name: ${{ github.ref_name }} -> Deploy www to Cloudflare (
+  ${{ github.run_attempt }}
+  )
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    name: Publish to Cloudflare Pages
+    steps:
+      - name: Get current date and time
+        id: datetime
+        run: echo "datetime=$(date +'%Y-%m-%dT%H-%M-%SZ')" >> $GITHUB_OUTPUT
+
+      - name: Display date/time in output (forensics when triaging issues)
+        run: echo ${{ steps.datetime.outputs.datetime }}
+
+      - name: Checkout
+        uses: actions/checkout@v3.6.0
+
+      # Run a build step here if your project requires
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUFLARE_EDIT_PAGES_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: www-intellireading
+          directory: src
+          branch: main
+          # Optional: Change the Wrangler version, allows you to point to 
+          # a specific version or a tag such as `beta`
+          wranglerVersion: '3'

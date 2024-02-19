@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>EPUB Processing</title>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.3.0/jszip.min.js" integrity="sha512-U+NyCZKzSrvW/VZf0VthsdArmYyjVHqlEdLQICzbzVVsRhIYCunhSt3Ni8ToMtEDnhA9i4n00YygX7RsIBlIUg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/config.js" type="text/javascript"></script>  
+    <script src="js/fileprocessing.js" type="text/javascript"></script>
+    <h1>EPUB Processing</h1>
+    <form>
+        <label for="api-key">API Key:</label>
+        <input type="text" id="api-key" name="api-key" value="" required>
+        <br>
+        <label for="file">EPUB file to process:</label>
+        <input type="file" id="file" name="file" required>
+        <br>
+        <input type="button" value="Process" onclick="processFile(event)">
+
+        <label id="progresslabel"></label>
+        <progress id="progressbar" value="0" ></progress>
+    </form>
+</body>
+
+</html>

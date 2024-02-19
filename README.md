@@ -1,5 +1,5 @@
 # intellireading-www
-Static website for intellireading.com that invokes the intellireading-api
+Static website for intellireading.com that invokes the intellireading-backend api
 
 ## Lint Status
 [![GitHub Super-Linter all codebase](https://github.com/0x6f677548/intellireading-www/actions/workflows/lint-super-linter-all-codebase.yml/badge.svg)](https://github.com/0x6f677548/intellireading-www/actions/workflows/lint-super-linter-all-codebase.yml)

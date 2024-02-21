@@ -37,7 +37,7 @@ jobs:
         run: echo ${{ steps.datetime.outputs.datetime }}
 
       - name: Checkout Code
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.1.1
         with:
           # Full git history is needed to get a proper
           # list of changed files within `super-linter`
@@ -47,8 +47,7 @@ jobs:
       # Run Linter against code base #
       ################################
       - name: Lint Code Base
-        uses: super-linter/super-linter@v6.1.1
+        uses: super-linter/super-linter@v6.2.0  
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: false

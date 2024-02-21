@@ -8,6 +8,8 @@ run-name: ${{ github.ref_name }} -> dump env and context (
   ${{ github.run_attempt }}
   )
     
+permissions: read-all
+
 jobs:
 
   debug:

@@ -5,11 +5,13 @@ on:
   workflow_dispatch:
 
 permissions:
-  actions: write
+  read-all
 
 jobs:
   clear-cache:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
     steps:
       - name: Clear cache
         uses: actions/github-script@v6

@@ -13,6 +13,8 @@ run-name: ${{ github.ref_name }} -> Super-linter (all codebase) (
   ${{ github.run_attempt }}
   )
 
+permissions: read-all
+
 jobs:
   build:
 
@@ -24,8 +26,6 @@ jobs:
     ############################################
     permissions:
       contents: read
-      packages: read
-      statuses: write
 
     steps:
 

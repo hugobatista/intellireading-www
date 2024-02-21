@@ -13,6 +13,8 @@ run-name: ${{ github.ref_name }} -> Deploy www to Cloudflare (
   ${{ github.run_attempt }}
   )
 
+permissions: read-all
+
 jobs:
   publish:
     runs-on: ubuntu-latest

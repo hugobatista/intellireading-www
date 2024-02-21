@@ -25,10 +25,9 @@ jobs:
     steps:
       - name: Get current date and time
         id: datetime
-        run: echo "datetime=$(date +'%Y-%m-%dT%H-%M-%SZ')" >> $GITHUB_OUTPUT
-
-      - name: Display date/time in output (forensics when triaging issues)
-        run: echo ${{ steps.datetime.outputs.datetime }}
+        run: |
+          datetime=$(date +"%Y-%m-%dT%H-%M-%SZ")
+          echo "datetime=$datetime" >> $GITHUB_OUTPUT
 
       - name: Checkout
         uses: actions/checkout@v3.6.0
@@ -39,7 +38,7 @@ jobs:
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUFLARE_EDIT_PAGES_TOKEN }}
-          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: www-intellireading
           directory: src
           branch: main

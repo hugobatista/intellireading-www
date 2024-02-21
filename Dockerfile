@@ -26,3 +26,9 @@ COPY ./src/. /usr/share/nginx/html
 # Switch to the 'wwwuser' for running the Nginx server
 # This enhances security by avoiding running the server as root
 USER wwwuser
+
+# HEALTHCHECK instruction checks the container health by accessing the root URL
+# and expects a successful HTTP response. The health check is configured with 
+# specific intervals, timeouts, start periods, and retry limits.
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+CMD curl --fail "http://localhost/" || exit 1

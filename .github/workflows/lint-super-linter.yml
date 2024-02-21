@@ -52,6 +52,3 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
-          VALIDATE_BASH_EXEC: false
-          VALIDATE_JAVASCRIPT_STANDARD: true
-          VALIDATE_PYTHON_ISORT: false

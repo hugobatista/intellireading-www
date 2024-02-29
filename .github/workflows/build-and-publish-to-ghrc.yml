@@ -22,17 +22,7 @@ env:
             
 jobs:
 
-  output_debug_info:
-    name: Output debug info
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: Echo current date and time
-      id: datetime
-      run: |
-        echo "datetime: $(date '+%Y-%m-%d %H:%M:%S')"
-
-    
+   
   build_and_publish:
     name: Build artifacts and publish to ghrc
     runs-on: ubuntu-latest
@@ -40,6 +30,11 @@ jobs:
       contents: write
       packages: write
     steps:
+
+    - name: Echo current date and time
+      id: datetime
+      run: |
+        echo "datetime: $(date '+%Y-%m-%d %H:%M:%S')"
 
     - name: Checkout
       uses: actions/checkout@v4.1.0

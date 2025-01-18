@@ -1,5 +1,5 @@
 ---
-name: Deploy-> www-> Prod (clouflare pages)
+name: deploy_to_cloudflare
 # yamllint disable rule:line-length
 
 on:
@@ -9,19 +9,19 @@ on:
 
 
 # set the run-name 
-run-name: ${{ github.ref_name }} -> Deploy www to Cloudflare (
+run-name: ${{ github.ref_name }} -> deploy_to_cloudflare (
   ${{ github.run_attempt }}
   )
 
 permissions: read-all
 
 jobs:
-  publish:
+  deploy_to_cloudflare:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       deployments: write
-    name: Publish to Cloudflare Pages
+    name: deploy_to_cloudflare
     steps:
       - name: Echo current date and time
         id: datetime

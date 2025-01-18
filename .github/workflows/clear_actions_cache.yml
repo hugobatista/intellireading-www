@@ -1,17 +1,16 @@
 ---
-name: Maintenance-> Clear github actions cache
+name: clear_actions_cache
 
 on:
   workflow_dispatch:
 
 permissions:
-  read-all
+  actions: write
 
 jobs:
-  clear-cache:
+  clear_actions_cache:
+    name: clear_actions_cache
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
     steps:
       - name: Echo current date and time
         id: datetime
@@ -19,7 +18,7 @@ jobs:
           echo "datetime: $(date '+%Y-%m-%d %H:%M:%S')"
 
       - name: Clear cache
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             console.log("About to clear")

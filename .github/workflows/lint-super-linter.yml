@@ -1,5 +1,5 @@
 ---
-name: Lint-> super-linter (only event codebase)
+name: super_linter
 
 on:
   release:
@@ -8,16 +8,16 @@ on:
     branches: [master, main]
 
 # set the run-name 
-run-name: ${{ github.ref_name }} -> Super-linter (only event codebase) (
+run-name: ${{ github.ref_name }} -> super_linter (
   ${{ github.run_attempt }}
   )
 
 permissions: read-all
 
 jobs:
-  build:
+  super_linter:
 
-    name: Lint code base part of the event
+    name: super_linter
     runs-on: ubuntu-latest
 
     ############################################
@@ -35,7 +35,7 @@ jobs:
           echo "datetime: $(date '+%Y-%m-%d %H:%M:%S')"
 
       - name: Checkout Code
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4
         with:
           # Full git history is needed to get a proper
           # list of changed files within `super-linter`
@@ -45,7 +45,7 @@ jobs:
       # Run Linter against code base #
       ################################
       - name: Lint Code Base
-        uses: super-linter/super-linter@v6.2.0  
+        uses: super-linter/super-linter@v7
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

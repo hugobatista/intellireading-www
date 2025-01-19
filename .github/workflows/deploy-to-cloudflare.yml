@@ -21,6 +21,8 @@ jobs:
       contents: read
       deployments: write
     name: deploy_to_cloudflare
+    environment: production
+    concurrency: production
     steps:
       - name: Echo current date and time
         id: datetime

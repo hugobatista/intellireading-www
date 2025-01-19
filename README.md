@@ -1,7 +1,5 @@
 ![Intellireading.com](https://raw.githubusercontent.com/0x6f677548/intellireading-www/main/src/img/intellireading.png)
 # Static website sources
-[![Lint](https://github.com/0x6f677548/intellireading-www/actions/workflows/lint-super-linter-all-codebase.yml/badge.svg)](https://github.com/0x6f677548/intellireading-www/actions/workflows/lint-super-linter-all-codebase.yml)
-
 [![Deploy to Clouflare](https://github.com/0x6f677548/intellireading-www/actions/workflows/deploy-to-cloudflare.yml/badge.svg)](https://github.com/0x6f677548/intellireading-www/actions/workflows/deploy-to-cloudflare.yml)
 [![Deploy to ghcr.io](https://github.com/0x6f677548/intellireading-www/actions/workflows/build-and-publish-to-ghcr.yml/badge.svg)](https://github.com/0x6f677548/intellireading-www/actions/workflows/build-and-publish-to-ghcr.yml)
 

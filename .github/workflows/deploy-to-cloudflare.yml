@@ -13,7 +13,6 @@ run-name: ${{ github.ref_name }} -> deploy_to_cloudflare (
   ${{ github.run_attempt }}
   )
 
-permissions: read-all
 
 jobs:
   deploy_to_cloudflare:

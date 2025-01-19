@@ -12,8 +12,6 @@ run-name: ${{ github.ref_name }} -> build_and_pub_to_ghcr (
   ${{ github.run_attempt }}
   )
 
-permissions: read-all
-
 # Defines two custom environment variables for the workflow. 
 # These are used for the Container registry domain, 
 #  and a name for the Docker image that this workflow builds.

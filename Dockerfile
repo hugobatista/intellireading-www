@@ -1,6 +1,10 @@
 # Use the official Nginx image as the base image
 FROM nginx:mainline
 
+# Links Docker image with repository
+LABEL org.opencontainers.image.source=https://github.com/0x6f677548/intellireading-www
+
+
 # Create a new user 'wwwuser' for running Nginx processes and ensure the user has a home directory
 # The '-r' option creates a system user, and '-m' ensures a home directory is created for the user
 RUN useradd -r -m wwwuser && \

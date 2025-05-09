@@ -1,7 +1,7 @@
 ![Intellireading.com](https://raw.githubusercontent.com/0x6f677548/intellireading-www/main/src/img/intellireading.png)
 # Static website sources
-[![Deploy to Clouflare](https://github.com/0x6f677548/intellireading-www/actions/workflows/deploy-to-cloudflare.yml/badge.svg)](https://github.com/0x6f677548/intellireading-www/actions/workflows/deploy-to-cloudflare.yml)
-[![Deploy to ghcr.io](https://github.com/0x6f677548/intellireading-www/actions/workflows/build-and-publish-to-ghcr.yml/badge.svg)](https://github.com/0x6f677548/intellireading-www/actions/workflows/build-and-publish-to-ghcr.yml)
+[![Deploy to Clouflare](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/deploy-to-cloudflare.yml/badge.svg)](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/deploy-to-cloudflare.yml)
+[![Deploy to ghcr.io](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/build-and-publish-to-ghcr.yml/badge.svg)](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/build-and-publish-to-ghcr.yml)
 
 This repo holds the static website for [Intellireading.com](https://intellireading.com).
 It is a simple static site that invokes the [Intellireading Backend API](https://go.hugobatista.com/gh/intellireading-api_server) allowing users to convert Epub files to a metaguided format.

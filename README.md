@@ -1,4 +1,4 @@
-![Intellireading.com](https://raw.githubusercontent.com/0x6f677548/intellireading-www/main/src/img/intellireading.png)
+![Intellireading.com](https://go.hugobatista.com/ghraw/intellireading-www/main/src/img/intellireading.png)
 # Static website sources
 [![Deploy to Clouflare](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/deploy-to-cloudflare.yml/badge.svg)](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/deploy-to-cloudflare.yml)
 [![Deploy to ghcr.io](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/build-and-publish-to-ghcr.yml/badge.svg)](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/build-and-publish-to-ghcr.yml)
@@ -7,7 +7,7 @@ This repo holds the static website for [Intellireading.com](https://intellireadi
 It is a simple static site that invokes the [Intellireading Backend API](https://go.hugobatista.com/gh/intellireading-api_server) allowing users to convert Epub files to a metaguided format.
 
 Example of a text converted to a metaguided text:
-![Intellireading.com](https://raw.githubusercontent.com/0x6f677548/intellireading-www/main/src/img/sample.png) 
+![Intellireading.com](https://go.hugobatista.com/ghraw/intellireading-www/main/src/img/sample.png) 
 
 
 This website is part of the [Intellireading](https://intellireading.com/) project, which aims to help people with dyslexia, ADHD, or anyone who wants to improve their reading focus and speed. 

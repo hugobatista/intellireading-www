@@ -66,4 +66,4 @@ We may include links to third-party websites or services on our site for your co
 
 ## Contact Us
 
-If you have any questions or concerns regarding these terms of service, please contact us at "Ox6f677548 at outlook.com". **We'll do our best to respond to your inquiry within 48 hours (although we may need to take a break to read a book).**
+If you have any questions or concerns regarding these terms of service, please contact us at "intellireading at hugobatista.com". **We'll do our best to respond to your inquiry within 48 hours (although we may need to take a break to read a book).**

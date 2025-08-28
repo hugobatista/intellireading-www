@@ -677,6 +677,19 @@
             color: var(--gray-300);
         }
 
+        /* Dark mode donate section fix */
+        [data-theme="dark"] .cta-section div[style*="background: rgba(255, 255, 255, 0.05)"] {
+            background: rgba(0, 0, 0, 0.3) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .cta-section div[style*="background: rgba(255, 255, 255, 0.05)"] {
+                background: rgba(0, 0, 0, 0.3) !important;
+                border-color: rgba(255, 255, 255, 0.2) !important;
+            }
+        }
+
         /* Error styling */
         #error {
             margin-top: 1rem;
@@ -1078,6 +1091,27 @@
                     </p>
                     <p class="testimonial-author">— Elena R., Book Blogger</p>
                 </div>
+
+                <div class="testimonial">
+                    <p class="testimonial-text">
+                        "The Kobo plugin is absolutely brilliant! Every book I send to my device gets automatically metaguided. No more manual uploads - it just works seamlessly."
+                    </p>
+                    <p class="testimonial-author">— David M., Kobo User</p>
+                </div>
+
+                <div class="testimonial">
+                    <p class="testimonial-text">
+                        "As someone with ADHD, the visual guides help me maintain focus like nothing else I've tried. This technology is genuinely life-changing."
+                    </p>
+                    <p class="testimonial-author">— Michael P., Software Developer</p>
+                </div>
+
+                <div class="testimonial">
+                    <p class="testimonial-text">
+                        "My Kobo automatically gets metaguided books now thanks to the plugin. Reading on vacation has never been more enjoyable and efficient!"
+                    </p>
+                    <p class="testimonial-author">— Rachel S., Travel Writer</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1087,11 +1121,23 @@
         <div class="container">
             <h2 class="cta-title">Ready to Read Faster?</h2>
             <p class="cta-subtitle">Join thousands of readers who've accelerated their reading speed with Intellireading</p>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
                 <a href="#upload" class="cta-button">Transform Your First Book Free</a>
                 <p style="font-size: 0.95rem; opacity: 0.8; margin: 0;">
                     Or install our <a href="https://go.hugobatista.com/gh/intellireading-calibre-plugins" target="_blank" rel="noopener noreferrer" style="color: var(--primary-300); text-decoration: underline;">Calibre plugins</a> for seamless integration
                 </p>
+                <div style="margin-top: 1rem; padding: 1.5rem; border-radius: 0.75rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); text-align: center;">
+                    <p style="font-size: 1.125rem; margin-bottom: 1rem; color: white; opacity: 0.9;">
+                        ❤️ Love Intellireading? Help us keep it free for everyone
+                    </p>
+                    <a href="https://go.hugobatista.com/donate-intellireading" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       style="display: inline-flex; align-items: center; gap: 0.75rem; background: #f59e0b; color: white; padding: 0.875rem 2rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); border: none;">
+                        <span style="font-size: 1.25rem;">💝</span>
+                        Support Our Mission
+                    </a>
+                </div>
             </div>
         </div>
     </section>

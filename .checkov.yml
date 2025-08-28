@@ -1,3 +1,0 @@
-# Description: Checkov configuration file
-skip-check:
-  - CKV_GHA_7

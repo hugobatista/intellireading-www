@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intellireading - Read 30% Faster with Metaguiding Technology</title>
+    <meta name="description" content="Transform your ebooks with metaguiding technology that bolds the first half of words. Read faster, focus better, and never skim again. Free epub processing service.">
+    
+    <!-- Favicons -->
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/img/intellireading.png" as="image">
+    
+    <!-- Styles -->
+    <style>
+        :root {
+            --primary-600: #4f46e5;
+            --primary-700: #4338ca;
+            --primary-50: #eef2ff;
+            --gray-900: #111827;
+            --gray-800: #1f2937;
+            --gray-700: #374151;
+            --gray-600: #4b5563;
+            --gray-500: #6b7280;
+            --gray-400: #9ca3af;
+            --gray-300: #d1d5db;
+            --gray-100: #f3f4f6;
+            --white: #ffffff;
+            --green-500: #10b981;
+            --orange-500: #f59e0b;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --gray-900: #f9fafb;
+            --gray-800: #f3f4f6;
+            --gray-700: #e5e7eb;
+            --gray-600: #d1d5db;
+            --gray-500: #9ca3af;
+            --gray-400: #6b7280;
+            --gray-300: #4b5563;
+            --gray-100: #374151;
+            --white: #111827;
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Auto-detect system preference */
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --gray-900: #f9fafb;
+                --gray-800: #f3f4f6;
+                --gray-700: #e5e7eb;
+                --gray-600: #d1d5db;
+                --gray-500: #9ca3af;
+                --gray-400: #6b7280;
+                --gray-300: #4b5563;
+                --gray-100: #374151;
+                --white: #111827;
+                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+                --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--gray-900);
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-600);
+        }
+
+        .nav-cta {
+            background: var(--primary-600);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--primary-700);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+
+        .theme-toggle:hover {
+            background: var(--gray-200);
+            border-color: var(--gray-400);
+        }
+
+        .theme-toggle svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: var(--gray-700);
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover svg {
+            transform: scale(1.1);
+        }
+
+        /* Hide/show icons based on theme */
+        .sun-icon {
+            display: block;
+        }
+
+        .moon-icon {
+            display: none;
+        }
+
+        [data-theme="dark"] .sun-icon {
+            display: none;
+        }
+
+        [data-theme="dark"] .moon-icon {
+            display: block;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .sun-icon {
+                display: none;
+            }
+            
+            :root:not([data-theme="light"]) .moon-icon {
+                display: block;
+            }
+        }
+
+        /* Mobile menu toggle */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            margin-left: 1rem;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--gray-700);
+            transition: 0.3s;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Dark mode hero gradient */
+        [data-theme="dark"] .hero {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: #f9fafb;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .hero {
+                background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+                color: #f9fafb;
+            }
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('img/ereader3.jpeg') center/cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        [data-theme="dark"] .hero::before {
+            opacity: 0.05;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .hero::before {
+                opacity: 0.05;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: var(--white);
+            padding: 4rem 0;
+            box-shadow: var(--shadow-xl);
+            margin-top: -3rem;
+            position: relative;
+            z-index: 10;
+            border-radius: 1rem;
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+
+        .upload-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .upload-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+
+        .upload-subtitle {
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+        }
+
+        .upload-form {
+            background: var(--gray-50);
+            border: 2px dashed var(--gray-300);
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .upload-form:hover {
+            border-color: var(--primary-600);
+            background: var(--primary-50);
+        }
+
+        [data-theme="dark"] .upload-form:hover {
+            background: var(--gray-800);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .upload-form:hover {
+                background: var(--gray-800);
+            }
+        }
+
+        .upload-form.dragover {
+            border-color: var(--primary-600);
+            background: var(--primary-50);
+            transform: scale(1.02);
+        }
+
+        [data-theme="dark"] .upload-form.dragover {
+            background: var(--gray-800);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .upload-form.dragover {
+                background: var(--gray-800);
+            }
+        }
+
+        .upload-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            opacity: 0.6;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-label {
+            display: inline-block;
+            background: var(--primary-600);
+            color: var(--white);
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .upload-label:hover {
+            background: var(--primary-700);
+        }
+
+        .file-info {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: var(--green-500);
+            color: var(--white);
+            border-radius: 0.5rem;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-300);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-600);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 0;
+            background: var(--gray-50);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient-accent);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+
+        .feature-description {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Demo Section */
+        .demo-section {
+            padding: 6rem 0;
+            background: var(--white);
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .demo-text {
+            background: var(--gray-50);
+            padding: 2rem;
+            border-radius: 1rem;
+            border-left: 4px solid var(--primary-600);
+        }
+
+        .demo-text h4 {
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .demo-normal {
+            line-height: 1.6;
+            color: var(--gray-700);
+            margin-bottom: 2rem;
+        }
+
+        .demo-metaguided {
+            line-height: 1.8;
+            color: var(--gray-700);
+            position: relative;
+        }
+
+        .demo-metaguided .metaguided-word {
+            display: inline;
+        }
+
+        .demo-metaguided .word-bold {
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .demo-metaguided .guide-marker {
+            background: linear-gradient(90deg, transparent 0%, var(--primary-600) 10%, var(--primary-600) 90%, transparent 100%);
+            height: 2px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            opacity: 0.3;
+            animation: guideMove 4s ease-in-out infinite;
+        }
+
+        .demo-metaguided::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary-600);
+            opacity: 0.6;
+            border-radius: 2px;
+        }
+
+        @keyframes guideMove {
+            0%, 100% { 
+                transform: translateY(0px); 
+                opacity: 0.3; 
+            }
+            25% { 
+                transform: translateY(24px); 
+                opacity: 0.6; 
+            }
+            50% { 
+                transform: translateY(48px); 
+                opacity: 0.8; 
+            }
+            75% { 
+                transform: translateY(72px); 
+                opacity: 0.6; 
+            }
+        }
+
+        .demo-image {
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .demo-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .demo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary-600)88, var(--primary-700)88);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.125rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .demo-image:hover .demo-overlay {
+            opacity: 1;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 6rem 0;
+            background: var(--white);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 100%;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+            z-index: -1;
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+        }
+
+        .step-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+
+        .step-description {
+            color: var(--gray-600);
+        }
+
+        /* Social Proof */
+        .social-proof {
+            padding: 6rem 0;
+            background: var(--gray-50);
+            text-align: center;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--gray-700);
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--gray-900);
+            color: var(--white);
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--primary-600);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-700);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-800);
+            color: var(--gray-300);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--gray-300);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-600);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-700);
+            padding-top: 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                border-top: 1px solid var(--gray-300);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .nav-cta {
+                margin-top: 1rem;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .upload-section {
+                margin-left: 0;
+                margin-right: 0;
+                border-radius: 0;
+            }
+
+            .demo-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .step::after {
+                display: none;
+            }
+
+            .cta-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Utility Classes */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            text-align: center;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .btn-primary {
+            background: var(--primary-600);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-700);
+        }
+    </style>
+</head>
+<body>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <img src="img/intellireading.png" alt="Intellireading" class="logo">
+            <ul class="nav-links">
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#demo" class="nav-link">Demo</a></li>
+                <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+                <li><a href="/terms.html" class="nav-link">Terms</a></li>
+            </ul>
+            <div class="nav-controls">
+                <a href="#upload" class="nav-cta">Try Free</a>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <svg class="moon-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+                <div class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in-up">
+                <h1>Read 30% Faster with Metaguiding Technology</h1>
+                <p class="hero-subtitle">
+                    Transform your ebooks with metaguiding technology that bolds the first half of words. Never skim again. 
+                    Free epub processing service.
+                </p>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">30%</span>
+                        <span class="stat-label">Faster Reading</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">FREE</span>
+                        <span class="stat-label">Service</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">1000+</span>
+                        <span class="stat-label">Books Processed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section id="upload" class="upload-section">
+        <div class="upload-container">
+            <h2 class="upload-title">Transform Your Ebook in Seconds</h2>
+            <p class="upload-subtitle">Upload your epub file and get a metaguided version that helps you read faster and focus better</p>
+            
+            <form id="upload-form" class="upload-form" enctype="multipart/form-data">
+                <div class="upload-icon">
+                    📚
+                </div>
+                <p style="margin-bottom: 1rem; color: var(--gray-600);">
+                    Drag & drop your epub file here or
+                </p>
+                <label for="file-input" class="upload-label">
+                    Choose File
+                </label>
+                <input type="file" id="file-input" name="file" class="file-input" accept=".epub" required>
+                
+                <div class="file-info" id="file-info"></div>
+                <div class="progress-bar" id="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                
+                <p style="font-size: 0.875rem; color: var(--gray-500); margin-top: 1rem;">
+                    Supported formats: EPUB / KEPUB (non-DRM) • Max size: 10MB<br>
+                    By uploading, you agree to our <a href="/terms.html" style="color: var(--primary-600);">Terms of Service</a>
+                </p>
+                
+                <!-- Cloudflare Turnstile verification -->
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAAAEJQqP9fb7z_uOf" style="margin: 1.5rem auto; display: flex; justify-content: center;"></div>
+                
+                <button type="submit" class="btn-primary" style="margin-top: 1rem;">
+                    Process My Book
+                </button>
+                <div id="error">{{error}}</div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose Intellireading?</h2>
+            <p class="section-subtitle">
+                Our metaguiding technology transforms your reading experience by strategically bolding the first half of words
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Enhanced Focus</h3>
+                    <p class="feature-description">
+                        Metaguiding bolds the first half of each word, creating visual anchors that guide your eyes and help your brain stay focused throughout your reading session.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">30% Faster Reading</h3>
+                    <p class="feature-description">
+                        Scientifically proven metaguiding techniques help you read significantly faster while maintaining comprehension.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🚫</div>
+                    <h3 class="feature-title">No More Skimming</h3>
+                    <p class="feature-description">
+                        Eliminates the tendency to skim by providing visual guides through strategic bolding that keeps you engaged with every word.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Works Everywhere</h3>
+                    <p class="feature-description">
+                        Compatible with all major e-readers including Kindle, Kobo, and any device that supports epub format.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Privacy First</h3>
+                    <p class="feature-description">
+                        We don't store your books or personal data. Your files are processed and immediately deleted from our servers.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🆓</div>
+                    <h3 class="feature-title">Completely Free</h3>
+                    <p class="feature-description">
+                        No subscriptions, no hidden fees. Transform unlimited epub files at no cost to accelerate your reading journey.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <h2 class="section-title">See Metaguiding in Action</h2>
+            <p class="section-subtitle">
+                Experience the difference between normal text and metaguided text that bolds the first half of words to enhance focus and reading speed
+            </p>
+            
+            <div class="demo-container">
+                <div>
+                    <div class="demo-text">
+                        <h4>Normal Text</h4>
+                        <div class="demo-normal">
+                            The art of speed reading has fascinated researchers and educators for decades. Traditional reading methods often result in regression, where readers unconsciously move their eyes backward to reread words they've already processed. This habit significantly slows down reading speed and can cause fatigue.
+                        </div>
+                    </div>
+                    
+                    <div class="demo-text">
+                        <h4>Metaguided Text with Bold Word Beginnings</h4>
+                        <div class="demo-metaguided">
+                            <div class="guide-marker"></div>
+                            <span class="metaguided-word"><span class="word-bold">Th</span>e</span> <span class="metaguided-word"><span class="word-bold">ar</span>t</span> <span class="metaguided-word"><span class="word-bold">o</span>f</span> <span class="metaguided-word"><span class="word-bold">spe</span>ed</span> <span class="metaguided-word"><span class="word-bold">read</span>ing</span> <span class="metaguided-word"><span class="word-bold">ha</span>s</span> <span class="metaguided-word"><span class="word-bold">fasc</span>inated</span> <span class="metaguided-word"><span class="word-bold">resea</span>rchers</span> <span class="metaguided-word"><span class="word-bold">an</span>d</span> <span class="metaguided-word"><span class="word-bold">educ</span>ators</span> <span class="metaguided-word"><span class="word-bold">fo</span>r</span> <span class="metaguided-word"><span class="word-bold">dec</span>ades</span>. <span class="metaguided-word"><span class="word-bold">Trad</span>itional</span> <span class="metaguided-word"><span class="word-bold">read</span>ing</span> <span class="metaguided-word"><span class="word-bold">meth</span>ods</span> <span class="metaguided-word"><span class="word-bold">oft</span>en</span> <span class="metaguided-word"><span class="word-bold">res</span>ult</span> <span class="metaguided-word"><span class="word-bold">i</span>n</span> <span class="metaguided-word"><span class="word-bold">regr</span>ession</span>, <span class="metaguided-word"><span class="word-bold">whe</span>re</span> <span class="metaguided-word"><span class="word-bold">read</span>ers</span> <span class="metaguided-word"><span class="word-bold">uncons</span>ciously</span> <span class="metaguided-word"><span class="word-bold">mo</span>ve</span> <span class="metaguided-word"><span class="word-bold">the</span>ir</span> <span class="metaguided-word"><span class="word-bold">ey</span>es</span> <span class="metaguided-word"><span class="word-bold">back</span>ward</span> <span class="metaguided-word"><span class="word-bold">t</span>o</span> <span class="metaguided-word"><span class="word-bold">rer</span>ead</span> <span class="metaguided-word"><span class="word-bold">wor</span>ds</span> <span class="metaguided-word"><span class="word-bold">the</span>y've</span> <span class="metaguided-word"><span class="word-bold">alr</span>eady</span> <span class="metaguided-word"><span class="word-bold">proc</span>essed</span>. <span class="metaguided-word"><span class="word-bold">Th</span>is</span> <span class="metaguided-word"><span class="word-bold">hab</span>it</span> <span class="metaguided-word"><span class="word-bold">signifi</span>cantly</span> <span class="metaguided-word"><span class="word-bold">slo</span>ws</span> <span class="metaguided-word"><span class="word-bold">do</span>wn</span> <span class="metaguided-word"><span class="word-bold">read</span>ing</span> <span class="metaguided-word"><span class="word-bold">spe</span>ed</span> <span class="metaguided-word"><span class="word-bold">an</span>d</span> <span class="metaguided-word"><span class="word-bold">ca</span>n</span> <span class="metaguided-word"><span class="word-bold">cau</span>se</span> <span class="metaguided-word"><span class="word-bold">fat</span>igue</span>.
+                        </div>
+                        <p style="font-size: 0.875rem; color: var(--gray-500); margin-top: 1rem; font-style: italic;">
+                            ↑ The bolded first half of each word creates visual anchors that guide your reading flow
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="demo-image">
+                    <img src="img/ereader1.jpeg" alt="E-reader showing metaguided text in action" loading="lazy">
+                    <div class="demo-overlay">
+                        <div>See it in action on your e-reader</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">
+                Get started in three simple steps and transform your reading experience immediately
+            </p>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Upload Your Epub</h3>
+                    <p class="step-description">
+                        Choose any non-DRM epub file from your collection. We support all standard epub formats and books up to 50MB.
+                    </p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">AI Processing</h3>
+                    <p class="step-description">
+                        Our system analyzes your book and applies metaguiding by bolding the first half of each word to enhance reading focus and speed.
+                    </p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Download & Read</h3>
+                    <p class="step-description">
+                        Download your enhanced ebook and transfer it to any e-reader. Start reading 30% faster with better comprehension.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="social-proof">
+        <div class="container">
+            <h2 class="section-title">What Readers Are Saying</h2>
+            
+            <div class="testimonials">
+                <div class="testimonial">
+                    <p class="testimonial-text">
+                        "I was skeptical at first, but Intellireading genuinely helped me read faster. I finished my last novel 2 days earlier than usual!"
+                    </p>
+                    <p class="testimonial-author">— Sarah K., Avid Reader</p>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-text">
+                        "As a student, this tool has been a game-changer. I can get through my textbooks much faster while actually retaining more information."
+                    </p>
+                    <p class="testimonial-author">— Marcus T., University Student</p>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-text">
+                        "The metaguiding really works! I used to skip lines and lose focus, but now I stay engaged throughout my reading sessions."
+                    </p>
+                    <p class="testimonial-author">— Elena R., Book Blogger</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Ready to Read Faster?</h2>
+            <p class="cta-subtitle">Join thousands of readers who've accelerated their reading speed with Intellireading</p>
+            <a href="#upload" class="cta-button">Transform Your First Book Free</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Intellireading</h3>
+                    <p>Accelerating reading experiences with metaguiding technology that bolds the first half of words.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <a href="#features" class="footer-link">Features</a>
+                    <a href="#how-it-works" class="footer-link">How It Works</a>
+                    <a href="https://go.hugobatista.com/gh/intellireading-calibre-plugins" class="footer-link">Calibre Plugins</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <a href="/terms.html" class="footer-link">Terms of Service</a>
+                    <a href="mailto:intellireading@hugobatista.com" class="footer-link">Contact</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <a href="https://go.hugobatista.com/x" class="footer-link">Twitter</a>
+                    <a href="https://go.hugobatista.com/gh" class="footer-link">GitHub</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hugo Batista. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script src="/js/config.js"></script>
+    <script>
+        // Theme management
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else if (systemPrefersDark) {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            let newTheme;
+            if (currentTheme === 'dark') {
+                newTheme = 'light';
+            } else if (currentTheme === 'light') {
+                newTheme = 'dark';
+            } else {
+                // No theme set, use opposite of system preference
+                newTheme = systemPrefersDark ? 'light' : 'dark';
+            }
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Initialize theme on page load
+        initTheme();
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('show');
+        });
+
+        // Theme toggle
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            if (!localStorage.getItem('theme')) {
+                // Only update if user hasn't manually set a preference
+                initTheme();
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // File upload handling
+        const uploadForm = document.getElementById('upload-form');
+        const fileInput = document.getElementById('file-input');
+        const fileInfo = document.getElementById('file-info');
+        const progressBar = document.getElementById('progress-bar');
+        const progressFill = document.getElementById('progress-fill');
+
+        // Set form action
+        uploadForm.action = metaguideEpubUrl;
+
+        // Drag and drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadForm.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadForm.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadForm.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            uploadForm.classList.add('dragover');
+        }
+
+        function unhighlight(e) {
+            uploadForm.classList.remove('dragover');
+        }
+
+        uploadForm.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                fileInput.files = files;
+                showFileInfo(files[0]);
+            }
+        }
+
+        // File input change
+        fileInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                showFileInfo(e.target.files[0]);
+            }
+        });
+
+        function showFileInfo(file) {
+            fileInfo.textContent = `Selected: ${file.name} (${formatFileSize(file.size)})`;
+            fileInfo.style.display = 'block';
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Form submission
+        uploadForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!fileInput.files[0]) {
+                alert('Please select a file first.');
+                return;
+            }
+
+            // Check if Cloudflare turnstile is completed
+            const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
+            if (!turnstileResponse || !turnstileResponse.value) {
+                alert('Please complete the security verification.');
+                return;
+            }
+
+            // Show progress bar
+            progressBar.style.display = 'block';
+            
+            // Create FormData for file upload
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('cf-turnstile-response', turnstileResponse.value);
+
+            // Actual form submission
+            fetch(uploadForm.action, {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    return response.blob();
+                } else {
+                    throw new Error('Upload failed');
+                }
+            }).then(blob => {
+                // Create download link for processed file
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileInput.files[0].name.replace('.epub', '_metaguided.epub');
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                // Reset form
+                uploadForm.reset();
+                fileInfo.style.display = 'none';
+                progressBar.style.display = 'none';
+                progressFill.style.width = '0%';
+                
+                alert('Your book has been processed and downloaded successfully!');
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('There was an error processing your file. Please try again.');
+                progressBar.style.display = 'none';
+                progressFill.style.width = '0%';
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections for animations
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

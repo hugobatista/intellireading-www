@@ -19,9 +19,8 @@ RUN useradd -r -m wwwuser && \
     touch /var/run/nginx.pid && \
     chown -R wwwuser:wwwuser /var/run/nginx.pid
 
-# Comment out the 'user' directive in nginx.conf to avoid the warning
-# about running Nginx as a non-root user
-RUN sed -i 's/^user/#user/' /etc/nginx/nginx.conf
+# Copy custom nginx configuration
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
 # Copy the content of the local src directory (containing your website files)
 # to the document root of Nginx in the container
@@ -35,4 +34,4 @@ USER wwwuser
 # and expects a successful HTTP response. The health check is configured with 
 # specific intervals, timeouts, start periods, and retry limits.
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-CMD curl --fail "http://localhost/" || exit 1
+CMD curl --fail "http://localhost:8080/" || exit 1

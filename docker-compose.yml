@@ -15,4 +15,4 @@ services:
       - ./config/dev/config.js:/usr/share/nginx/html/js/config.js
     image: intellireading-www
     ports:
-      - 8080:80
+      - 8080:8080

@@ -2,7 +2,7 @@
 FROM nginx:mainline
 
 # Links Docker image with repository
-LABEL org.opencontainers.image.source=https://go.hugobatista.com/gh/intellireading-www
+LABEL org.opencontainers.image.source=https://github.com/hugobatista/intellireading-www
 
 
 # Create a new user 'wwwuser' for running Nginx processes and ensure the user has a home directory

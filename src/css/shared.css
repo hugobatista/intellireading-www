@@ -285,8 +285,36 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .nav {
+        position: relative;
+    }
+
     .nav-links {
         display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        flex-direction: column;
+        gap: 0;
+        padding: 0.5rem 0;
+        box-shadow: var(--shadow-lg);
+        border-bottom: 1px solid var(--gray-100);
+    }
+
+    .nav-links.active,
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-links li {
+        padding: 0.5rem 1.25rem;
+    }
+
+    .nav-link {
+        display: block;
+        width: 100%;
     }
 
     .mobile-menu-toggle {

@@ -1342,58 +1342,66 @@
 
         // ---- Legacy server-side submission ----
         function doLegacySubmit(file) {
-            // Ensure Turnstile is visible and ready
-            const turnstileWidget = document.getElementById('turnstile-widget');
-            if (turnstileWidget) {
-                turnstileWidget.style.display = 'flex';
-                // Reset Turnstile widget to ensure fresh challenge
-                if (window.turnstile) {
-                    window.turnstile.reset();
-                }
-            }
+             // Ensure Turnstile is visible and ready
+             const turnstileWidget = document.getElementById('turnstile-widget');
+             if (turnstileWidget) {
+                 turnstileWidget.style.display = 'flex';
+                 // Reset Turnstile widget to ensure fresh challenge
+                 if (window.turnstile) {
+                     window.turnstile.reset();
+                 }
+             }
 
-            // Check if Turnstile response is present
-            const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
-            if (!turnstileResponse || !turnstileResponse.value) {
-                showError('Please complete the security verification.');
-                if (submitBtn) submitBtn.disabled = false;
-                return;
-            }
+             // Give Turnstile a moment to update the token (100ms should be enough)
+             // Then check if the token is available
+             setTimeout(function() {
+                 const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
+                 console.log('Turnstile response field:', turnstileResponse);
+                 console.log('Turnstile response value:', turnstileResponse ? turnstileResponse.value : 'N/A');
+                 
+                 if (!turnstileResponse || !turnstileResponse.value) {
+                     showError('Please complete the security verification. If the verification widget does not appear, please refresh the page.');
+                     if (submitBtn) submitBtn.disabled = false;
+                     return;
+                 }
 
-            if (submitBtn) submitBtn.disabled = true;
+                 if (submitBtn) submitBtn.disabled = true;
 
-            progressBar.style.display = 'block';
-            progressFill.style.width = '50%';
+                 progressBar.style.display = 'block';
+                 progressFill.style.width = '50%';
 
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('cf-turnstile-response', turnstileResponse.value);
+                 const formData = new FormData();
+                 formData.append('file', file);
+                 formData.append('cf-turnstile-response', turnstileResponse.value);
+                 console.log('Submitting with Turnstile token:', turnstileResponse.value);
 
-            fetch(uploadForm.action, {
-                method: 'POST',
-                body: formData
-            }).then(response => {
-                if (response.ok) {
-                    return response.blob();
-                }
-                return response.text().then(text => {
-                    throw new Error(text || 'Upload failed');
-                });
-            }).then(blob => {
-                downloadBlob(blob, file.name.replace('.epub', '_metaguided.epub'));
-                resetForm();
-                // Hide Turnstile after successful submission
-                const turnstileWidget = document.getElementById('turnstile-widget');
-                if (turnstileWidget) turnstileWidget.style.display = 'none';
-                alert('Your book has been processed and downloaded successfully!');
-            }).catch(error => {
-                console.error('Error:', error);
-                showError('There was an error processing your file: ' + error.message);
-                progressBar.style.display = 'none';
-                progressFill.style.width = '0%';
-                if (submitBtn) submitBtn.disabled = false;
-            });
-        }
+                 fetch(uploadForm.action, {
+                     method: 'POST',
+                     body: formData
+                 }).then(response => {
+                     if (response.ok) {
+                         return response.blob();
+                     }
+                     return response.text().then(text => {
+                         console.error('Server error (status ' + response.status + '):', text);
+                         throw new Error('Upload failed (status ' + response.status + '): ' + (text || 'Unknown error'));
+                     });
+                 }).then(blob => {
+                     downloadBlob(blob, file.name.replace('.epub', '_metaguided.epub'));
+                     resetForm();
+                     // Hide Turnstile after successful submission
+                     const turnstileWidget = document.getElementById('turnstile-widget');
+                     if (turnstileWidget) turnstileWidget.style.display = 'none';
+                     alert('Your book has been processed and downloaded successfully!');
+                 }).catch(error => {
+                     console.error('Error:', error);
+                     showError('There was an error processing your file: ' + error.message);
+                     progressBar.style.display = 'none';
+                     progressFill.style.width = '0%';
+                     if (submitBtn) submitBtn.disabled = false;
+                 });
+             }, 100);
+         }
 
         // ---- Form submission (local first, legacy fallback) ----
         uploadForm.addEventListener('submit', function(e) {

@@ -84,7 +84,11 @@
                 if (turnstileWidget) {
                     turnstileWidget.style.display = 'flex';
                     window.turnstile.render('#turnstile-widget', {
-                        sitekey: '0x4AAAAAAAEJQqP9fb7z_uOf'
+                        sitekey: '0x4AAAAAAAEJQqP9fb7z_uOf',
+                        callback: function(token) {
+                            // Token is automatically populated in the hidden input by Turnstile
+                            console.log('Turnstile token received');
+                        }
                     });
                 }
             };

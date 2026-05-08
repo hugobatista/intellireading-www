@@ -297,6 +297,12 @@
             showLegacyWarning();
             // Load Turnstile immediately for legacy path
             loadAndShowTurnstile();
+            // Set status to unsupported and notify so button can be enabled
+            status = 'unsupported';
+            // Delay notification to ensure DOM listener is ready
+            setTimeout(function() {
+                notifyStatusChange();
+            }, 100);
         }
     }
 

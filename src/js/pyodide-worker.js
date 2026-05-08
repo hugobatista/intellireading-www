@@ -22,7 +22,8 @@ self.addEventListener('message', async (event) => {
             await initialize(msg.pyodideCdnUrl);
             self.postMessage({ type: 'status', status: 'ready' });
         } catch (err) {
-            self.postMessage({ type: 'error', message: err.message });
+            console.error('Intellireading Worker: Initialization failed', err);
+            self.postMessage({ type: 'error', message: err.message || 'Unknown initialization error' });
         }
         return;
     }
@@ -67,28 +68,45 @@ async function initialize(cdnUrl) {
 
     self.postMessage({ type: 'status', status: 'loading', message: 'Loading Python WebAssembly runtime…' });
 
-    importScripts(cdnUrl);
+    try {
+        importScripts(cdnUrl);
+    } catch (err) {
+        throw new Error('Failed to load Pyodide script: ' + (err.message || err));
+    }
 
     self.postMessage({ type: 'status', status: 'loading', message: 'Starting Python…' });
 
-    pyodide = await loadPyodide({
-        indexURL: indexURL,
-        stdout: () => {},
-        stderr: () => {}
-    });
+    try {
+        pyodide = await loadPyodide({
+            indexURL: indexURL,
+            stdout: () => {},
+            stderr: () => {}
+        });
+    } catch (err) {
+        throw new Error('Failed to load Pyodide: ' + (err.message || err));
+    }
 
     self.postMessage({ type: 'status', status: 'loading', message: 'Setting up package manager…' });
 
-    await pyodide.loadPackage(["micropip", "regex"]);
+    try {
+        await pyodide.loadPackage(["micropip", "regex"]);
+    } catch (err) {
+        throw new Error('Failed to load packages: ' + (err.message || err));
+    }
 
     self.postMessage({ type: 'status', status: 'loading', message: 'Installing intellireading-cli…' });
 
-    const micropip = pyodide.pyimport('micropip');
-    // Install the library from PyPI (micropip caches wheels in IndexedDB)
-    await micropip.install('intellireading-cli');
+    try {
+        const micropip = pyodide.pyimport('micropip');
+        // Install the library from PyPI (micropip caches wheels in IndexedDB)
+        await micropip.install('intellireading-cli');
+    } catch (err) {
+        throw new Error('Failed to install intellireading-cli: ' + (err.message || err));
+    }
 
     // Register the processing functions so JS can call them directly
-    pyodide.runPython(`
+    try {
+        pyodide.runPython(`
 from io import BytesIO
 from intellireading.client import metaguide_epub_stream
 
@@ -98,6 +116,9 @@ def process_epub(input_bytes):
     output_stream = metaguide_epub_stream(input_stream)
     return output_stream.getvalue()
 `);
+    } catch (err) {
+        throw new Error('Failed to register processing functions: ' + (err.message || err));
+    }
 
     initialized = true;
 }

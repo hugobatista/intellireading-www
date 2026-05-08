@@ -28,10 +28,25 @@
 
     // ---- Helper: browser support -----------------------------------------
     function isSupported() {
-        return (
-            typeof Worker !== 'undefined' &&
-            typeof WebAssembly !== 'undefined'
-        );
+        // Check for WebAssembly and Worker support
+        if (typeof Worker === 'undefined' || typeof WebAssembly === 'undefined') {
+            return false;
+        }
+
+        // Safari 15 and earlier have known WebAssembly issues; require Safari 16+
+        var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if (isSafari) {
+            var safariVersionMatch = navigator.userAgent.match(/Version\/([\d.]+)/);
+            if (safariVersionMatch) {
+                var safariVersion = parseInt(safariVersionMatch[1]);
+                if (safariVersion < 16) {
+                    console.warn('Intellireading: Safari ' + safariVersion + ' has known WebAssembly compatibility issues. Local processing requires Safari 16+.');
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     // ---- Helper: update status UI ----------------------------------------
@@ -82,19 +97,23 @@
         if (window.turnstile) {
             // Already loaded, render once if needed
             renderTurnstile();
-        } else {
-            // Load Turnstile script dynamically
-            var existing = document.getElementById('turnstile-script');
-            if (existing) return;
-            var script = document.createElement('script');
-            script.id = 'turnstile-script';
-            script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-            script.async = true;
-            script.onload = function() {
-                renderTurnstile();
-            };
-            document.head.appendChild(script);
-        }
+         } else {
+             // Load Turnstile script dynamically
+             var existing = document.getElementById('turnstile-script');
+             if (existing) return;
+             var script = document.createElement('script');
+             script.id = 'turnstile-script';
+             script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+             script.async = true;
+             script.onload = function() {
+                 console.log('Intellireading: Turnstile script loaded');
+                 renderTurnstile();
+             };
+             script.onerror = function() {
+                 console.warn('Intellireading: Failed to load Turnstile script');
+             };
+             document.head.appendChild(script);
+         }
     }
 
     function getTurnstileResponse() {

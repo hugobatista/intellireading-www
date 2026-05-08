@@ -1382,6 +1382,10 @@
                 // Hide Turnstile after successful submission
                 const turnstileWidget = document.getElementById('turnstile-widget');
                 if (turnstileWidget) turnstileWidget.style.display = 'none';
+                const local = window.IntellireadingLocal;
+                if (local && local.resetTurnstile) {
+                    local.resetTurnstile();
+                }
                 alert('Your book has been processed and downloaded successfully!');
             }).catch(error => {
                 console.error('Error:', error);
@@ -1413,14 +1417,17 @@
                 progressBar.style.display = 'block';
                 progressFill.style.width = '50%';
 
-                local.processFile(file).then(function(result) {
-                    downloadBlob(result.blob, result.fileName.replace('.epub', '_metaguided.epub'));
-                    resetForm();
-                    // Hide Turnstile and warning after successful local processing
-                    var turnstileWidget = document.getElementById('turnstile-widget');
-                    var warnEl = document.getElementById('legacy-warning');
-                    if (turnstileWidget) turnstileWidget.style.display = 'none';
-                    if (warnEl) warnEl.style.display = 'none';
+            local.processFile(file).then(function(result) {
+                downloadBlob(result.blob, result.fileName.replace('.epub', '_metaguided.epub'));
+                resetForm();
+                // Hide Turnstile and warning after successful local processing
+                var turnstileWidget = document.getElementById('turnstile-widget');
+                var warnEl = document.getElementById('legacy-warning');
+                if (turnstileWidget) turnstileWidget.style.display = 'none';
+                if (warnEl) warnEl.style.display = 'none';
+                if (local && local.resetTurnstile) {
+                    local.resetTurnstile();
+                }
                     // Update status message to "Epub processing complete."
                     const statusEl = document.getElementById('local-status');
                     if (statusEl) {

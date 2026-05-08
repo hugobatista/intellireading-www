@@ -172,6 +172,7 @@
                 status = 'error';
                 updateUI('Local processing unavailable: ' + msg.message, 0);
                 showLegacyWarning();
+                loadAndShowTurnstile();
                 // Notify status change so button can be enabled for legacy
                 notifyStatusChange();
                 if (processingReject) {
@@ -188,6 +189,7 @@
         status = 'error';
         updateUI('Worker error, falling back to server.', 0);
         showLegacyWarning();
+        loadAndShowTurnstile();
         // Notify status change so button can be enabled for legacy
         notifyStatusChange();
         if (processingReject) {
@@ -228,6 +230,9 @@
         } catch (e) {
             console.warn('Intellireading: Failed to create worker.', e);
             status = 'unsupported';
+            showLegacyWarning();
+            loadAndShowTurnstile();
+            notifyStatusChange();
             return false;
         }
     }

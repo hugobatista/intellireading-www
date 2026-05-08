@@ -12,6 +12,62 @@
 
     var WORKER_URL = './js/pyodide-worker.js';
 
+    /**
+     * Allowlist of trusted CDN domains for Pyodide.
+     * Mirrors the worker-side validation for defense in depth.
+     */
+    var ALLOWED_CDN_DOMAINS = [
+        'cdn.jsdelivr.net',
+        // Add other trusted CDN domains here as needed
+    ];
+
+    /**
+     * Validates that a CDN URL is from a trusted source.
+     * This mirrors the worker validation to catch issues early on the main thread.
+     *
+     * @param {string} url - The CDN URL to validate
+     * @returns {boolean} - True if valid
+     */
+    function validateCdnUrl(url) {
+        if (!url || typeof url !== 'string') {
+            console.error('Intellireading: CDN URL must be a non-empty string');
+            return false;
+        }
+
+        var parsed;
+        try {
+            parsed = new URL(url);
+        } catch (e) {
+            console.error('Intellireading: CDN URL is not valid:', url);
+            return false;
+        }
+
+        // Must be HTTPS
+        if (parsed.protocol !== 'https:') {
+            console.error('Intellireading: CDN URL must use HTTPS. Got:', parsed.protocol);
+            return false;
+        }
+
+        // Must end with /pyodide.js
+        if (!parsed.pathname.endsWith('/pyodide.js')) {
+            console.error('Intellireading: CDN URL must end with /pyodide.js. Got:', parsed.pathname);
+            return false;
+        }
+
+        // Must be from allowed domain
+        var hostname = parsed.hostname;
+        var isAllowed = ALLOWED_CDN_DOMAINS.some(function (domain) {
+            return hostname === domain || hostname.endsWith('.' + domain);
+        });
+
+        if (!isAllowed) {
+            console.error('Intellireading: CDN domain not allowed:', hostname, '. Allowed:', ALLOWED_CDN_DOMAINS.join(', '));
+            return false;
+        }
+
+        return true;
+    }
+
     // ---- State ------------------------------------------------------------
     var worker = null;
     var status = 'uninitialized';  // 'uninitialized' | 'loading' | 'ready' | 'error' | 'unsupported'
@@ -179,10 +235,15 @@
             worker.addEventListener('message', onWorkerMessage);
             worker.addEventListener('error', onWorkerError);
 
-            // Pass the CDN URL so the worker knows where to load Pyodide from
+            // Get CDN URL from config or use default
             var cdnUrl = typeof pyodideCdnUrl !== 'undefined'
                 ? pyodideCdnUrl
                 : 'https://cdn.jsdelivr.net/pyodide/v0.29.4/full/pyodide.js';
+
+            // Validate CDN URL before sending to worker (defense in depth)
+            if (!validateCdnUrl(cdnUrl)) {
+                throw new Error('CDN URL validation failed. Check console for details.');
+            }
 
             worker.postMessage({ type: 'init', pyodideCdnUrl: cdnUrl });
             return true;

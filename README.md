@@ -4,7 +4,8 @@
 [![Deploy to ghcr.io](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/build-and-publish-to-ghcr.yml/badge.svg)](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/build-and-publish-to-ghcr.yml)
 
 This repo holds the static website for [Intellireading.com](https://intellireading.com).
-It is a simple static site that invokes the [Intellireading Backend API](https://go.hugobatista.com/gh/intellireading-api_server) allowing users to convert Epub files to a metaguided format.
+It is a simple static site that invokes the [Intellireading Backend API](https://go.hugobatista.com/gh/intellireading-api_server) allowing users to convert Epub files to a metaguided format. 
+Update at 2024-06: The website also supports offline conversion of Epub files using WebAssembly, so it can be used without an internet connection.
 
 Example of a text converted to a metaguided text:
 ![Intellireading.com](https://go.hugobatista.com/ghraw/intellireading-www/main/src/img/sample.png) 

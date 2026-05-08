@@ -17,7 +17,6 @@
     var status = 'uninitialized';  // 'uninitialized' | 'loading' | 'ready' | 'error' | 'unsupported'
     var processingResolve = null;
     var processingReject = null;
-    var turnstileWidgetId = null;
 
     // ---- UI elements (set after DOMContentLoaded) -------------------------
     var $status  = null;   // #local-status
@@ -80,56 +79,14 @@
         if ($warning) $warning.style.display = 'none';
     }
 
-    // ---- Helper: load and show Turnstile for legacy path -------------------
-    function loadAndShowTurnstile() {
-        var turnstileWidget = document.getElementById('turnstile-widget');
-        if (!turnstileWidget) return;
-        turnstileWidget.style.display = 'flex';
-
-        function renderTurnstile() {
-            if (!window.turnstile || turnstileWidgetId !== null) return;
-            turnstileWidgetId = window.turnstile.render('#turnstile-widget', {
-                sitekey: '0x4AAAAAAAEJQqP9fb7z_uOf'
-            });
+    // ---- Helper: legacy Turnstile (match pre-offline behavior) ------------
+    function enableLegacyMode() {
+        var turnstileWidget = document.querySelector('.cf-turnstile');
+        if (turnstileWidget) {
+            turnstileWidget.style.display = 'flex';
         }
-
-        // Check if Turnstile is already loaded
-        if (window.turnstile) {
-            // Already loaded, render once if needed
-            renderTurnstile();
-         } else {
-             // Load Turnstile script dynamically
-             var existing = document.getElementById('turnstile-script');
-             if (existing) return;
-             var script = document.createElement('script');
-             script.id = 'turnstile-script';
-             script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-             script.async = true;
-             script.onload = function() {
-                 console.log('Intellireading: Turnstile script loaded');
-                 renderTurnstile();
-             };
-             script.onerror = function() {
-                 console.warn('Intellireading: Failed to load Turnstile script');
-             };
-             document.head.appendChild(script);
-         }
-    }
-
-    function getTurnstileResponse() {
-        if (window.turnstile && turnstileWidgetId !== null) {
-            return window.turnstile.getResponse(turnstileWidgetId);
-        }
-        var field = document.querySelector('[name="cf-turnstile-response"]');
-        return field ? field.value : '';
-    }
-
-    function resetTurnstile() {
-        if (window.turnstile && turnstileWidgetId !== null) {
-            window.turnstile.reset(turnstileWidgetId);
-            return true;
-        }
-        return false;
+        showLegacyWarning();
+        notifyStatusChange();
     }
 
     // ---- Worker message / error handlers ---------------------------------
@@ -171,10 +128,7 @@
             case 'error':
                 status = 'error';
                 updateUI('Local processing unavailable: ' + msg.message, 0);
-                showLegacyWarning();
-                loadAndShowTurnstile();
-                // Notify status change so button can be enabled for legacy
-                notifyStatusChange();
+                enableLegacyMode();
                 if (processingReject) {
                     processingReject(new Error(msg.message));
                     processingResolve = null;
@@ -188,10 +142,7 @@
         console.error('Intellireading: Worker error', err);
         status = 'error';
         updateUI('Worker error, falling back to server.', 0);
-        showLegacyWarning();
-        loadAndShowTurnstile();
-        // Notify status change so button can be enabled for legacy
-        notifyStatusChange();
+        enableLegacyMode();
         if (processingReject) {
             processingReject(new Error('Worker error'));
             processingResolve = null;
@@ -230,9 +181,7 @@
         } catch (e) {
             console.warn('Intellireading: Failed to create worker.', e);
             status = 'unsupported';
-            showLegacyWarning();
-            loadAndShowTurnstile();
-            notifyStatusChange();
+            enableLegacyMode();
             return false;
         }
     }
@@ -338,9 +287,7 @@
                 $fileSizeInfo.innerHTML = 'Supported formats: EPUB / KEPUB (non-DRM) • Max size: 10MB<br>By using the service, you agree to our <a href="/terms.html" style="color: var(--primary-600);">Terms of Service</a>';
             }
             // Show deprecation warning immediately for legacy path
-            showLegacyWarning();
-            // Load Turnstile immediately for legacy path
-            loadAndShowTurnstile();
+            enableLegacyMode();
             // Set status to unsupported and notify so button can be enabled
             status = 'unsupported';
             // Delay notification to ensure DOM listener is ready
@@ -360,14 +307,13 @@
     }
 
      // ---- Export ----------------------------------------------------------
-     window.IntellireadingLocal = {
-         getStatus:      getStatus,
-         processFile:    processFile,
-         ensureInitialized: ensureInitialized,
-         showLegacyWarning: showLegacyWarning,
-         hideLocalUI:    hideLocalUI,
-         getTurnstileResponse: getTurnstileResponse,
-         resetTurnstile: resetTurnstile
-     };
+    window.IntellireadingLocal = {
+        getStatus:      getStatus,
+        processFile:    processFile,
+        ensureInitialized: ensureInitialized,
+        showLegacyWarning: showLegacyWarning,
+        hideLocalUI:    hideLocalUI,
+        enableLegacyMode: enableLegacyMode
+    };
 
 })();

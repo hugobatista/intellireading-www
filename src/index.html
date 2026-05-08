@@ -1158,7 +1158,7 @@
     <!-- Scripts -->
     <script src="./js/config.js"></script>
     <script src="./js/shared.js"></script>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
     <script>
         // Register Service Worker for offline caching of Pyodide assets
         if ('serviceWorker' in navigator) {
@@ -1393,8 +1393,7 @@
             }).then(blob => {
                 downloadBlob(blob, file.name.replace('.epub', '_metaguided.epub'));
                 resetForm();
-                // Hide Turnstile after successful submission
-                if (turnstileWidget) turnstileWidget.style.display = 'none';
+                // Keep Turnstile visible for subsequent submissions
                 alert('Your book has been processed and downloaded successfully!');
             }).catch(error => {
                 console.error('Error:', error);

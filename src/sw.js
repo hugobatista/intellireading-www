@@ -22,8 +22,7 @@ var STATIC_CDNS = [
     'https://files.pythonhosted.org/',
     'https://pypi.org/',
     'https://cdnjs.cloudflare.com/ajax/libs/jszip/',
-    'https://cdnjs.cloudflare.com/ajax/libs/jquery/',
-    'https://challenges.cloudflare.com/turnstile/'
+    'https://cdnjs.cloudflare.com/ajax/libs/jquery/'
 ];
 
 /* ---- Install -----------------------------------------------------------
@@ -62,6 +61,12 @@ self.addEventListener('fetch', function (event) {
     // --- CDN assets (cache-first) ---
     if (STATIC_CDNS.some(function (prefix) { return url.startsWith(prefix); })) {
         event.respondWith(cacheFirst(event.request));
+        return;
+    }
+
+    // --- Cloudflare Turnstile: always network-only ---
+    if (url.startsWith('https://challenges.cloudflare.com/')) {
+        event.respondWith(fetch(event.request));
         return;
     }
 

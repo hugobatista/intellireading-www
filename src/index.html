@@ -1162,9 +1162,15 @@
     <script>
         // Register Service Worker for offline caching of Pyodide assets
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js').catch(function(err) {
-                console.log('Intellireading: SW registration skipped', err);
-            });
+            var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+            var safariVersionMatch = navigator.userAgent.match(/Version\/([\d.]+)/);
+            var safariVersion = safariVersionMatch ? parseInt(safariVersionMatch[1]) : null;
+            // Skip SW on Safari <16 to avoid Turnstile verification stalls
+            if (!(isSafari && safariVersion && safariVersion < 16)) {
+                navigator.serviceWorker.register('./sw.js').catch(function(err) {
+                    console.log('Intellireading: SW registration skipped', err);
+                });
+            }
         }
     </script>
     <script src="./js/pyodide-client.js"></script>
@@ -1337,6 +1343,14 @@
             progressBar.style.display = 'none';
             progressFill.style.width = '0%';
             clearError();
+            // Reset Turnstile for the next submission (legacy path)
+            if (window.turnstile) {
+                try {
+                    window.turnstile.reset();
+                } catch (e) {
+                    // Ignore reset errors; Turnstile will render fresh on next load
+                }
+            }
             // Update button state after reset
             updateButtonState();
         }

@@ -271,7 +271,6 @@
     }
 
     function getStatus() { return status; }
-    function isReady()    { return status === 'ready'; }
 
     // ---- Lazy initialisation on first user interaction -------------------
     function onFirstInteraction() {
@@ -336,16 +335,15 @@
         }
     }
 
-    // ---- Export ----------------------------------------------------------
-    window.IntellireadingLocal = {
-        isReady:        isReady,
-        getStatus:      getStatus,
-        processFile:    processFile,
-        ensureInitialized: ensureInitialized,
-        showLegacyWarning: showLegacyWarning,
-        hideLocalUI:    hideLocalUI,
-        getTurnstileResponse: getTurnstileResponse,
-        resetTurnstile: resetTurnstile
-    };
+     // ---- Export ----------------------------------------------------------
+     window.IntellireadingLocal = {
+         getStatus:      getStatus,
+         processFile:    processFile,
+         ensureInitialized: ensureInitialized,
+         showLegacyWarning: showLegacyWarning,
+         hideLocalUI:    hideLocalUI,
+         getTurnstileResponse: getTurnstileResponse,
+         resetTurnstile: resetTurnstile
+     };
 
 })();

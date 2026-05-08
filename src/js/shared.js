@@ -92,10 +92,8 @@ function createModernFooter() {
 }
 
 
-// Detect page type and load appropriate components
+// Load shared components
 function loadComponents() {
-    const currentPage = window.location.pathname.split('/').pop();
-    
     // Load header
     const headerElement = document.getElementById('header-placeholder');
     if (headerElement) {
@@ -165,8 +163,3 @@ document.addEventListener('DOMContentLoaded', () => {
         initMobileMenu();
     }, 50);
 });
-
-// Export for modules if needed
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { initThemeToggle };
-}

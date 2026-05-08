@@ -22,7 +22,7 @@
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Intellireading - Read 30% Faster with AI Metaguiding">
     <meta property="twitter:description" content="Transform your ebooks with AI Metaguiding algorithms. Read faster, focus better, and never skim again. Free epub processing service.">
-    <meta property="twitter:image" content="https://www.intellireading.com/img/intellireading-social.png
+    <meta property="twitter:image" content="https://www.intellireading.com/img/intellireading-social.png">
     <meta property="twitter:url" content="https://www.intellireading.com">
 
     
@@ -703,7 +703,6 @@
     </style>
 </head>
 <body>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <!-- Header Placeholder -->
     <div id="header-placeholder"></div>
 
@@ -754,17 +753,28 @@
                 <input type="file" id="file-input" name="file" class="file-input" accept=".epub,.kepub" required>
                 
                 <div class="file-info" id="file-info"></div>
+                <div id="local-status" style="display: none; margin-top: 1rem; padding: 0.75rem; border-radius: 0.5rem; font-weight: 500; text-align: center;"></div>
                 <div class="progress-bar" id="progress-bar">
                     <div class="progress-fill" id="progress-fill"></div>
                 </div>
                 
-                <p style="font-size: 0.875rem; color: var(--gray-500); margin-top: 1rem;">
+                <!-- Local processing capability message -->
+                <div id="local-capable-message" style="display: none; margin-top: 1rem; padding: 0.75rem; background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; border-radius: 0.5rem; font-weight: 500; text-align: center; font-size: 0.9rem;">
+                    ✓ Local processing capability detected. Your EPUB will be processed locally in your browser - no data will be sent to our servers.
+                </div>
+                
+                <p id="file-size-info" style="font-size: 0.875rem; color: var(--gray-500); margin-top: 1rem;">
                     Supported formats: EPUB / KEPUB (non-DRM) • Max size: 10MB<br>
-                    By uploading, you agree to our <a href="/terms.html" style="color: var(--primary-600);">Terms of Service</a>
+                    By using the service, you agree to our <a href="/terms.html" style="color: var(--primary-600);">Terms of Service</a>
                 </p>
                 
-                <!-- Cloudflare Turnstile verification -->
-                <div class="cf-turnstile" data-sitekey="0x4AAAAAAAEJQqP9fb7z_uOf" style="margin: 1.5rem auto; display: flex; justify-content: center;"></div>
+                <!-- Cloudflare Turnstile verification (only shown for legacy server path) -->
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAAAEJQqP9fb7z_uOf" style="margin: 1.5rem auto; display: none; justify-content: center;"></div>
+                
+                <!-- Legacy processing warning (shown when local processing is unavailable) -->
+                <div id="legacy-warning" style="display: none; margin-top: 1rem; padding: 0.75rem; background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; border-radius: 0.5rem; font-weight: 500; text-align: center; font-size: 0.9rem;">
+                    ⚠️ Your browser does not support local processing. We will fall back to server-based conversion, which is a legacy feature that will be deprecated during <strong>2026</strong>. For the best experience and offline support, please update to a modern browser that supports WebAssembly.
+                </div>
                 
                 <button type="submit" class="btn-primary" style="margin-top: 1rem;">
                     Process My Book
@@ -1146,214 +1156,10 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script src="./js/config.js"></script>
     <script src="./js/shared.js"></script>
-    <script>
-        // Wait for shared.js to load the components before binding events
-        document.addEventListener('DOMContentLoaded', function() {
-            // Small delay to ensure header is loaded by shared.js
-            setTimeout(function() {
-                // Mobile menu toggle
-                const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-                const navLinks = document.querySelector('.nav-links');
-                if (mobileMenuToggle && navLinks) {
-                    mobileMenuToggle.addEventListener('click', function() {
-                        navLinks.classList.toggle('show');
-                    });
-                }
-            }, 100);
-        });
-
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // File upload handling
-        const uploadForm = document.getElementById('upload-form');
-        const fileInput = document.getElementById('file-input');
-        const fileInfo = document.getElementById('file-info');
-        const progressBar = document.getElementById('progress-bar');
-        const progressFill = document.getElementById('progress-fill');
-        const errorDiv = document.getElementById('error');
-
-        // Set form action from config.js (like original indexscript.js)
-        uploadForm.action = metaguideEpubUrl;
-
-        // Initialize error div (clear any template placeholders)
-        if (errorDiv.textContent === '{{error}}') {
-            errorDiv.textContent = '';
-            errorDiv.style.display = 'none';
-        }
-
-        // Clear any existing errors
-        function clearError() {
-            errorDiv.textContent = '';
-            errorDiv.style.display = 'none';
-        }
-
-        // Show error message
-        function showError(message) {
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-        }
-
-        // Drag and drop
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            uploadForm.addEventListener(eventName, preventDefaults, false);
-        });
-
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        ['dragenter', 'dragover'].forEach(eventName => {
-            uploadForm.addEventListener(eventName, highlight, false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            uploadForm.addEventListener(eventName, unhighlight, false);
-        });
-
-        function highlight(e) {
-            uploadForm.classList.add('dragover');
-        }
-
-        function unhighlight(e) {
-            uploadForm.classList.remove('dragover');
-        }
-
-        uploadForm.addEventListener('drop', handleDrop, false);
-
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            
-            if (files.length > 0) {
-                clearError(); // Clear any previous errors
-                fileInput.files = files;
-                showFileInfo(files[0]);
-            }
-        }
-
-        // File input change
-        fileInput.addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
-                clearError(); // Clear any previous errors
-                showFileInfo(e.target.files[0]);
-            }
-        });
-
-        function showFileInfo(file) {
-            fileInfo.textContent = `Selected: ${file.name} (${formatFileSize(file.size)})`;
-            fileInfo.style.display = 'block';
-        }
-
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-
-        // Form submission
-        uploadForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Clear any previous errors
-            clearError();
-            
-            if (!fileInput.files[0]) {
-                showError('Please select a file first.');
-                return;
-            }
-
-            // Check if Cloudflare turnstile is completed
-            const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
-            if (!turnstileResponse || !turnstileResponse.value) {
-                showError('Please complete the security verification.');
-                return;
-            }
-
-            // Show progress bar
-            progressBar.style.display = 'block';
-            
-            // Create FormData for file upload
-            const formData = new FormData();
-            formData.append('file', fileInput.files[0]);
-            formData.append('cf-turnstile-response', turnstileResponse.value);
-
-            // Actual form submission
-            fetch(uploadForm.action, {
-                method: 'POST',
-                body: formData
-            }).then(response => {
-                if (response.ok) {
-                    return response.blob();
-                } else {
-                    // Try to get error message from response
-                    return response.text().then(text => {
-                        throw new Error(text || 'Upload failed');
-                    });
-                }
-            }).then(blob => {
-                // Create download link for processed file
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = fileInput.files[0].name.replace('.epub', '_metaguided.epub');
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-                
-                // Reset form
-                uploadForm.reset();
-                fileInfo.style.display = 'none';
-                progressBar.style.display = 'none';
-                progressFill.style.width = '0%';
-                clearError();
-                
-                // Show success message (you could also create a success div)
-                alert('Your book has been processed and downloaded successfully!');
-            }).catch(error => {
-                console.error('Error:', error);
-                showError('There was an error processing your file: ' + error.message);
-                progressBar.style.display = 'none';
-                progressFill.style.width = '0%';
-            });
-        });
-
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in-up');
-                }
-            });
-        }, observerOptions);
-
-        // Observe sections for animations
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
-    </script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
+    <script src="./js/pyodide-client.js"></script>
+    <script src="./js/index.js"></script>
 </body>
 </html>

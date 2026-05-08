@@ -17,6 +17,7 @@
     var status = 'uninitialized';  // 'uninitialized' | 'loading' | 'ready' | 'error' | 'unsupported'
     var processingResolve = null;
     var processingReject = null;
+    var turnstileWidgetId = null;
 
     // ---- UI elements (set after DOMContentLoaded) -------------------------
     var $status  = null;   // #local-status
@@ -68,32 +69,40 @@
     function loadAndShowTurnstile() {
         var turnstileWidget = document.getElementById('turnstile-widget');
         if (!turnstileWidget) return;
+        turnstileWidget.style.display = 'flex';
+
+        function renderTurnstile() {
+            if (!window.turnstile || turnstileWidgetId !== null) return;
+            turnstileWidgetId = window.turnstile.render('#turnstile-widget', {
+                sitekey: '0x4AAAAAAAEJQqP9fb7z_uOf'
+            });
+        }
 
         // Check if Turnstile is already loaded
         if (window.turnstile) {
-            // Already loaded, just show and reset
-            turnstileWidget.style.display = 'flex';
-            window.turnstile.reset();
+            // Already loaded, render once if needed
+            renderTurnstile();
         } else {
             // Load Turnstile script dynamically
+            var existing = document.getElementById('turnstile-script');
+            if (existing) return;
             var script = document.createElement('script');
+            script.id = 'turnstile-script';
             script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
             script.async = true;
             script.onload = function() {
-                // After script loads, render the widget
-                if (turnstileWidget) {
-                    turnstileWidget.style.display = 'flex';
-                    window.turnstile.render('#turnstile-widget', {
-                        sitekey: '0x4AAAAAAAEJQqP9fb7z_uOf',
-                        callback: function(token) {
-                            // Token is automatically populated in the hidden input by Turnstile
-                            console.log('Turnstile token received');
-                        }
-                    });
-                }
+                renderTurnstile();
             };
             document.head.appendChild(script);
         }
+    }
+
+    function getTurnstileResponse() {
+        if (window.turnstile && turnstileWidgetId !== null) {
+            return window.turnstile.getResponse(turnstileWidgetId);
+        }
+        var field = document.querySelector('[name="cf-turnstile-response"]');
+        return field ? field.value : '';
     }
 
     // ---- Worker message / error handlers ---------------------------------
@@ -326,7 +335,8 @@
         processFile:    processFile,
         ensureInitialized: ensureInitialized,
         showLegacyWarning: showLegacyWarning,
-        hideLocalUI:    hideLocalUI
+        hideLocalUI:    hideLocalUI,
+        getTurnstileResponse: getTurnstileResponse
     };
 
 })();

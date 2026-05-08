@@ -31,9 +31,8 @@ Linting: `lint-super-linter.yml` (manual trigger only).
 
 ## API Configuration
 
-Two endpoints in `config.js`:
+endpoint in `config.js`:
 - `metaguideEpubUrl` — main page form submits files here
-- `metaguideXtmlUrl` — legacy page (`metaguide_xhtml.html`) uses this
 
 The dev config points both to `http://localhost:80/...`.
 
@@ -41,7 +40,6 @@ The dev config points both to `http://localhost:80/...`.
 
 - `index.html` — main landing page; posts to `metaguideEpubUrl` via `fetch` + Cloudflare Turnstile
 - `terms.html` — ToS (uses shared.js for header/footer)
-- `metaguide_xhtml.html` — legacy page; processes EPUB client-side (jQuery + JSZip), posts individual HTML files to `metaguideXtmlUrl`
 
 ## Conventions
 

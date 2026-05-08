@@ -26,6 +26,16 @@
     var $fileSizeInfo = null; // #file-size-info
 
     // ---- Helper: browser support -----------------------------------------
+    function getSafariVersion() {
+        var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if (!isSafari) return null;
+
+        var safariVersionMatch = navigator.userAgent.match(/Version\/([\d.]+)/);
+        if (!safariVersionMatch) return null;
+
+        return parseInt(safariVersionMatch[1], 10);
+    }
+
     function isSupported() {
         // Check for WebAssembly and Worker support
         if (typeof Worker === 'undefined' || typeof WebAssembly === 'undefined') {
@@ -33,16 +43,10 @@
         }
 
         // Safari 15 and earlier have known WebAssembly issues; require Safari 16+
-        var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-        if (isSafari) {
-            var safariVersionMatch = navigator.userAgent.match(/Version\/([\d.]+)/);
-            if (safariVersionMatch) {
-                var safariVersion = parseInt(safariVersionMatch[1]);
-                if (safariVersion < 16) {
-                    console.warn('Intellireading: Safari ' + safariVersion + ' has known WebAssembly compatibility issues. Local processing requires Safari 16+.');
-                    return false;
-                }
-            }
+        var safariVersion = getSafariVersion();
+        if (safariVersion && safariVersion < 16) {
+            console.warn('Intellireading: Safari ' + safariVersion + ' has known WebAssembly compatibility issues. Local processing requires Safari 16+.');
+            return false;
         }
 
         return true;
@@ -127,7 +131,7 @@
 
             case 'error':
                 status = 'error';
-                if (isSafari) {
+                if (getSafariVersion()) {
                     updateUI('Local processing unavailable in this browser. Using server conversion.', 0);
                 } else {
                     updateUI('Local processing unavailable: ' + msg.message, 0);

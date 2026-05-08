@@ -769,7 +769,7 @@
                 </p>
                 
                 <!-- Cloudflare Turnstile verification (only shown for legacy server path) -->
-                <div class="cf-turnstile" id="turnstile-widget" data-sitekey="0x4AAAAAAAEJQqP9fb7z_uOf" style="margin: 1.5rem auto; display: none; justify-content: center;"></div>
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAAAEJQqP9fb7z_uOf" style="margin: 1.5rem auto; display: none; justify-content: center;"></div>
                 
                 <!-- Legacy processing warning (shown when local processing is unavailable) -->
                 <div id="legacy-warning" style="display: none; margin-top: 1rem; padding: 0.75rem; background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; border-radius: 0.5rem; font-weight: 500; text-align: center; font-size: 0.9rem;">
@@ -1158,6 +1158,7 @@
     <!-- Scripts -->
     <script src="./js/config.js"></script>
     <script src="./js/shared.js"></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script>
         // Register Service Worker for offline caching of Pyodide assets
         if ('serviceWorker' in navigator) {
@@ -1343,15 +1344,14 @@
         // ---- Legacy server-side submission ----
         function doLegacySubmit(file) {
             // Ensure Turnstile is visible and ready
-            const turnstileWidget = document.getElementById('turnstile-widget');
+            const turnstileWidget = document.querySelector('.cf-turnstile');
             if (turnstileWidget) {
                 turnstileWidget.style.display = 'flex';
             }
 
-            const local = window.IntellireadingLocal;
-            const token = local && local.getTurnstileResponse ? local.getTurnstileResponse() : '';
-
-            if (!token) {
+            // Check if Cloudflare turnstile is completed
+            const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
+            if (!turnstileResponse || !turnstileResponse.value) {
                 showError('Please complete the security verification.');
                 if (submitBtn) submitBtn.disabled = false;
                 return;
@@ -1364,7 +1364,7 @@
 
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('cf-turnstile-response', token);
+            formData.append('cf-turnstile-response', turnstileResponse.value);
 
             fetch(uploadForm.action, {
                 method: 'POST',
@@ -1380,12 +1380,7 @@
                 downloadBlob(blob, file.name.replace('.epub', '_metaguided.epub'));
                 resetForm();
                 // Hide Turnstile after successful submission
-                const turnstileWidget = document.getElementById('turnstile-widget');
                 if (turnstileWidget) turnstileWidget.style.display = 'none';
-                const local = window.IntellireadingLocal;
-                if (local && local.resetTurnstile) {
-                    local.resetTurnstile();
-                }
                 alert('Your book has been processed and downloaded successfully!');
             }).catch(error => {
                 console.error('Error:', error);
@@ -1421,14 +1416,11 @@
                 downloadBlob(result.blob, result.fileName.replace('.epub', '_metaguided.epub'));
                 resetForm();
                 // Hide Turnstile and warning after successful local processing
-                var turnstileWidget = document.getElementById('turnstile-widget');
+                var turnstileWidget = document.querySelector('.cf-turnstile');
                 var warnEl = document.getElementById('legacy-warning');
                 if (turnstileWidget) turnstileWidget.style.display = 'none';
                 if (warnEl) warnEl.style.display = 'none';
-                if (local && local.resetTurnstile) {
-                    local.resetTurnstile();
-                }
-                    // Update status message to "Epub processing complete."
+                // Update status message to "Epub processing complete."
                     const statusEl = document.getElementById('local-status');
                     if (statusEl) {
                         statusEl.textContent = 'Epub processing complete.';

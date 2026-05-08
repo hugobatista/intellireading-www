@@ -1204,9 +1204,13 @@
         const progressBar = document.getElementById('progress-bar');
         const progressFill = document.getElementById('progress-fill');
         const errorDiv = document.getElementById('error');
+        const submitBtn = uploadForm.querySelector('.btn-primary');
 
         // Set form action from config.js (like original indexscript.js)
         uploadForm.action = metaguideEpubUrl;
+
+        // Initialize button as disabled (will enable when file is selected or offline ready)
+        if (submitBtn) submitBtn.disabled = true;
 
         // Initialize error div (clear any template placeholders)
         if (errorDiv.textContent === '{{error}}') {
@@ -1265,6 +1269,27 @@
             }
         }
 
+        // Helper: update button state based on file selection and offline readiness
+        function updateButtonState() {
+            const hasFile = fileInput.files.length > 0;
+            const local = window.IntellireadingLocal;
+            const isOfflineReady = local && local.getStatus() === 'ready';
+            const isOfflineUnavailable = local && (local.getStatus() === 'error' || local.getStatus() === 'unsupported');
+            
+            // Enable button if:
+            // - File is selected AND (offline is ready OR offline is unavailable/error)
+            if (hasFile && (isOfflineReady || isOfflineUnavailable)) {
+                if (submitBtn) submitBtn.disabled = false;
+            } else {
+                if (submitBtn) submitBtn.disabled = true;
+            }
+        }
+
+        // Listen for Intellireading status changes to update button state
+        document.addEventListener('IntellireadingStatusChange', function(e) {
+            updateButtonState();
+        });
+
         // File input change
         fileInput.addEventListener('change', function(e) {
             if (e.target.files.length > 0) {
@@ -1273,7 +1298,11 @@
                 // Reset status message when a new file is chosen
                 const statusEl = document.getElementById('local-status');
                 if (statusEl) statusEl.style.display = 'none';
+            } else {
+                fileInfo.style.display = 'none';
             }
+            // Update button state after file selection change
+            updateButtonState();
         });
 
         function showFileInfo(file) {
@@ -1307,6 +1336,8 @@
             progressBar.style.display = 'none';
             progressFill.style.width = '0%';
             clearError();
+            // Update button state after reset
+            updateButtonState();
         }
 
         // ---- Legacy server-side submission ----
@@ -1325,8 +1356,11 @@
             const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
             if (!turnstileResponse || !turnstileResponse.value) {
                 showError('Please complete the security verification.');
+                if (submitBtn) submitBtn.disabled = false;
                 return;
             }
+
+            if (submitBtn) submitBtn.disabled = true;
 
             progressBar.style.display = 'block';
             progressFill.style.width = '50%';
@@ -1357,56 +1391,7 @@
                 showError('There was an error processing your file: ' + error.message);
                 progressBar.style.display = 'none';
                 progressFill.style.width = '0%';
-            });
-        }
-                };
-                document.head.appendChild(script);
-            } else {
-                // Script already loaded, just show widget and reset
-                const turnstileWidget = document.getElementById('turnstile-widget');
-                if (turnstileWidget) {
-                    turnstileWidget.style.display = 'flex';
-                    window.turnstile.reset();
-                }
-            }
-
-            // Check if Turnstile response is present
-            // Note: This may be called before Turnstile finishes rendering, so we'll check again in the submit handler
-            const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
-            if (!turnstileResponse || !turnstileResponse.value) {
-                showError('Please complete the security verification.');
-                return;
-            }
-
-            progressBar.style.display = 'block';
-            progressFill.style.width = '50%';
-
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('cf-turnstile-response', turnstileResponse.value);
-
-            fetch(uploadForm.action, {
-                method: 'POST',
-                body: formData
-            }).then(response => {
-                if (response.ok) {
-                    return response.blob();
-                }
-                return response.text().then(text => {
-                    throw new Error(text || 'Upload failed');
-                });
-            }).then(blob => {
-                downloadBlob(blob, file.name.replace('.epub', '_metaguided.epub'));
-                resetForm();
-                // Hide Turnstile after successful submission
-                const turnstileWidget = document.getElementById('turnstile-widget');
-                if (turnstileWidget) turnstileWidget.style.display = 'none';
-                alert('Your book has been processed and downloaded successfully!');
-            }).catch(error => {
-                console.error('Error:', error);
-                showError('There was an error processing your file: ' + error.message);
-                progressBar.style.display = 'none';
-                progressFill.style.width = '0%';
+                if (submitBtn) submitBtn.disabled = false;
             });
         }
 
@@ -1421,10 +1406,13 @@
             }
 
             const file = fileInput.files[0];
+            
+            // Disable the submit button during processing
+            if (submitBtn) submitBtn.disabled = true;
 
             // ---- Attempt local (in-browser) processing ----
             const local = window.IntellireadingLocal;
-            if (local && (local.getStatus() === 'ready' || local.getStatus() === 'loading')) {
+            if (local && local.getStatus() === 'ready') {
                 progressBar.style.display = 'block';
                 progressFill.style.width = '50%';
 
@@ -1453,7 +1441,9 @@
                 }).catch(function(err) {
                     // Local processing failed – fall back to server
                     console.warn('Intellireading: Local processing failed, using server fallback.', err);
-                    if (local.getStatus) local.showLegacyWarning();
+                    if (local) local.showLegacyWarning();
+                    progressBar.style.display = 'none';
+                    progressFill.style.width = '0%';
                     doLegacySubmit(file);
                 });
                 return;

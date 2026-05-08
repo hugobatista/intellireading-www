@@ -110,6 +110,8 @@
                     setTimeout(function () {
                         if ($status) $status.style.display = 'none';
                     }, 2000);
+                    // Notify status change so button can be enabled
+                    notifyStatusChange();
                 } else if (msg.status === 'processing') {
                     updateUI(msg.message || 'Processing EPUB locally…');
                 } else if (msg.status === 'loading') {
@@ -130,6 +132,8 @@
                 status = 'error';
                 updateUI('Local processing unavailable: ' + msg.message, 0);
                 showLegacyWarning();
+                // Notify status change so button can be enabled for legacy
+                notifyStatusChange();
                 if (processingReject) {
                     processingReject(new Error(msg.message));
                     processingResolve = null;
@@ -144,6 +148,8 @@
         status = 'error';
         updateUI('Worker error, falling back to server.', 0);
         showLegacyWarning();
+        // Notify status change so button can be enabled for legacy
+        notifyStatusChange();
         if (processingReject) {
             processingReject(new Error('Worker error'));
             processingResolve = null;
@@ -291,6 +297,15 @@
             showLegacyWarning();
             // Load Turnstile immediately for legacy path
             loadAndShowTurnstile();
+        }
+    }
+
+    // ---- Helper: notify when status changes for button state update --------
+    function notifyStatusChange() {
+        // Trigger custom event that index.html can listen to
+        if (typeof window !== 'undefined' && window.document) {
+            var event = new CustomEvent('IntellireadingStatusChange', { detail: { status: status } });
+            window.document.dispatchEvent(event);
         }
     }
 

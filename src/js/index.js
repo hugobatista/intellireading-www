@@ -181,7 +181,7 @@
             }).then(function (blob) {
                 downloadBlob(blob, file.name.replace('.epub', '_metaguided.epub'));
                 resetForm();
-                alert('Your book has been processed and downloaded successfully!');
+                showCompletionStatus('Your book has been processed and downloaded successfully!', 4000);
             }).catch(function (error) {
                 console.error('Error:', error);
                 showError('There was an error processing your file: ' + error.message);
@@ -191,18 +191,18 @@
             });
         }
 
-        function showCompletionStatus() {
+        function showCompletionStatus(message, durationMs) {
             var statusEl = document.getElementById('local-status');
             if (!statusEl) return;
 
-            statusEl.textContent = 'Epub processing complete.';
+            statusEl.textContent = message || 'Epub processing complete.';
             statusEl.style.display = 'block';
             statusEl.style.background = '#d1fae5';
             statusEl.style.color = '#065f46';
             statusEl.style.border = '1px solid #6ee7b7';
             setTimeout(function () {
                 statusEl.style.display = 'none';
-            }, 3000);
+            }, typeof durationMs === 'number' ? durationMs : 3000);
         }
 
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(function (eventName) {
@@ -264,8 +264,7 @@
                     if (turnstileWidget) turnstileWidget.style.display = 'none';
                     if (warnEl) warnEl.style.display = 'none';
 
-                    showCompletionStatus();
-                    alert('Your book has been processed and downloaded successfully!');
+                    showCompletionStatus('Your book has been processed and downloaded successfully!', 4000);
                 }).catch(function (err) {
                     console.warn('Intellireading: Local processing failed, using server fallback.', err);
                     if (local && local.showLegacyWarning) local.showLegacyWarning();

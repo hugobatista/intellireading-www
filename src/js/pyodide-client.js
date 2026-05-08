@@ -105,6 +105,14 @@
         return field ? field.value : '';
     }
 
+    function resetTurnstile() {
+        if (window.turnstile && turnstileWidgetId !== null) {
+            window.turnstile.reset(turnstileWidgetId);
+            return true;
+        }
+        return false;
+    }
+
     // ---- Worker message / error handlers ---------------------------------
     function onWorkerMessage(e) {
         var msg = e.data;
@@ -336,7 +344,8 @@
         ensureInitialized: ensureInitialized,
         showLegacyWarning: showLegacyWarning,
         hideLocalUI:    hideLocalUI,
-        getTurnstileResponse: getTurnstileResponse
+        getTurnstileResponse: getTurnstileResponse,
+        resetTurnstile: resetTurnstile
     };
 
 })();

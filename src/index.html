@@ -703,7 +703,6 @@
     </style>
 </head>
 <body>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <!-- Header Placeholder -->
     <div id="header-placeholder"></div>
 
@@ -754,17 +753,28 @@
                 <input type="file" id="file-input" name="file" class="file-input" accept=".epub,.kepub" required>
                 
                 <div class="file-info" id="file-info"></div>
+                <div id="local-status" style="display: none; margin-top: 1rem; padding: 0.75rem; border-radius: 0.5rem; font-weight: 500; text-align: center;"></div>
                 <div class="progress-bar" id="progress-bar">
                     <div class="progress-fill" id="progress-fill"></div>
                 </div>
                 
-                <p style="font-size: 0.875rem; color: var(--gray-500); margin-top: 1rem;">
+                <!-- Local processing capability message -->
+                <div id="local-capable-message" style="display: none; margin-top: 1rem; padding: 0.75rem; background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; border-radius: 0.5rem; font-weight: 500; text-align: center; font-size: 0.9rem;">
+                    ✓ Local processing capability detected. Your EPUB will be processed locally in your browser - no data will be sent to our servers.
+                </div>
+                
+                <p id="file-size-info" style="font-size: 0.875rem; color: var(--gray-500); margin-top: 1rem;">
                     Supported formats: EPUB / KEPUB (non-DRM) • Max size: 10MB<br>
-                    By uploading, you agree to our <a href="/terms.html" style="color: var(--primary-600);">Terms of Service</a>
+                    By using the service, you agree to our <a href="/terms.html" style="color: var(--primary-600);">Terms of Service</a>
                 </p>
                 
-                <!-- Cloudflare Turnstile verification -->
-                <div class="cf-turnstile" data-sitekey="0x4AAAAAAAEJQqP9fb7z_uOf" style="margin: 1.5rem auto; display: flex; justify-content: center;"></div>
+                <!-- Cloudflare Turnstile verification (only shown for legacy server path) -->
+                <div class="cf-turnstile" id="turnstile-widget" data-sitekey="0x4AAAAAAAEJQqP9fb7z_uOf" style="margin: 1.5rem auto; display: none; justify-content: center;"></div>
+                
+                <!-- Legacy processing warning (shown when local processing is unavailable) -->
+                <div id="legacy-warning" style="display: none; margin-top: 1rem; padding: 0.75rem; background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; border-radius: 0.5rem; font-weight: 500; text-align: center; font-size: 0.9rem;">
+                    ⚠️ Server-based conversion is a legacy feature that will be deprecated by <strong>August 2026</strong>. For the best experience and offline support, please update to a modern browser that supports WebAssembly.
+                </div>
                 
                 <button type="submit" class="btn-primary" style="margin-top: 1rem;">
                     Process My Book
@@ -1146,9 +1156,17 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script src="./js/config.js"></script>
     <script src="./js/shared.js"></script>
+    <script>
+        // Register Service Worker for offline caching of Pyodide assets
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').catch(function(err) {
+                console.log('Intellireading: SW registration skipped', err);
+            });
+        }
+    </script>
+    <script src="./js/pyodide-client.js"></script>
     <script>
         // Wait for shared.js to load the components before binding events
         document.addEventListener('DOMContentLoaded', function() {
@@ -1252,6 +1270,9 @@
             if (e.target.files.length > 0) {
                 clearError(); // Clear any previous errors
                 showFileInfo(e.target.files[0]);
+                // Reset status message when a new file is chosen
+                const statusEl = document.getElementById('local-status');
+                if (statusEl) statusEl.style.display = 'none';
             }
         });
 
@@ -1268,65 +1289,68 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
-        // Form submission
-        uploadForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Clear any previous errors
+        // ---- Shared helpers for both local & legacy flows ----
+        function downloadBlob(blob, fileName) {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+
+        function resetForm() {
+            uploadForm.reset();
+            fileInfo.style.display = 'none';
+            progressBar.style.display = 'none';
+            progressFill.style.width = '0%';
             clearError();
-            
-            if (!fileInput.files[0]) {
-                showError('Please select a file first.');
-                return;
+        }
+
+        // ---- Legacy server-side submission ----
+        function doLegacySubmit(file) {
+            // Ensure Turnstile is visible and ready
+            const turnstileWidget = document.getElementById('turnstile-widget');
+            if (turnstileWidget) {
+                turnstileWidget.style.display = 'flex';
+                // Reset Turnstile widget to ensure fresh challenge
+                if (window.turnstile) {
+                    window.turnstile.reset();
+                }
             }
 
-            // Check if Cloudflare turnstile is completed
+            // Check if Turnstile response is present
             const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
             if (!turnstileResponse || !turnstileResponse.value) {
                 showError('Please complete the security verification.');
                 return;
             }
 
-            // Show progress bar
             progressBar.style.display = 'block';
-            
-            // Create FormData for file upload
+            progressFill.style.width = '50%';
+
             const formData = new FormData();
-            formData.append('file', fileInput.files[0]);
+            formData.append('file', file);
             formData.append('cf-turnstile-response', turnstileResponse.value);
 
-            // Actual form submission
             fetch(uploadForm.action, {
                 method: 'POST',
                 body: formData
             }).then(response => {
                 if (response.ok) {
                     return response.blob();
-                } else {
-                    // Try to get error message from response
-                    return response.text().then(text => {
-                        throw new Error(text || 'Upload failed');
-                    });
                 }
+                return response.text().then(text => {
+                    throw new Error(text || 'Upload failed');
+                });
             }).then(blob => {
-                // Create download link for processed file
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = fileInput.files[0].name.replace('.epub', '_metaguided.epub');
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-                
-                // Reset form
-                uploadForm.reset();
-                fileInfo.style.display = 'none';
-                progressBar.style.display = 'none';
-                progressFill.style.width = '0%';
-                clearError();
-                
-                // Show success message (you could also create a success div)
+                downloadBlob(blob, file.name.replace('.epub', '_metaguided.epub'));
+                resetForm();
+                // Hide Turnstile after successful submission
+                const turnstileWidget = document.getElementById('turnstile-widget');
+                if (turnstileWidget) turnstileWidget.style.display = 'none';
                 alert('Your book has been processed and downloaded successfully!');
             }).catch(error => {
                 console.error('Error:', error);
@@ -1334,6 +1358,110 @@
                 progressBar.style.display = 'none';
                 progressFill.style.width = '0%';
             });
+        }
+                };
+                document.head.appendChild(script);
+            } else {
+                // Script already loaded, just show widget and reset
+                const turnstileWidget = document.getElementById('turnstile-widget');
+                if (turnstileWidget) {
+                    turnstileWidget.style.display = 'flex';
+                    window.turnstile.reset();
+                }
+            }
+
+            // Check if Turnstile response is present
+            // Note: This may be called before Turnstile finishes rendering, so we'll check again in the submit handler
+            const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
+            if (!turnstileResponse || !turnstileResponse.value) {
+                showError('Please complete the security verification.');
+                return;
+            }
+
+            progressBar.style.display = 'block';
+            progressFill.style.width = '50%';
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('cf-turnstile-response', turnstileResponse.value);
+
+            fetch(uploadForm.action, {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    return response.blob();
+                }
+                return response.text().then(text => {
+                    throw new Error(text || 'Upload failed');
+                });
+            }).then(blob => {
+                downloadBlob(blob, file.name.replace('.epub', '_metaguided.epub'));
+                resetForm();
+                // Hide Turnstile after successful submission
+                const turnstileWidget = document.getElementById('turnstile-widget');
+                if (turnstileWidget) turnstileWidget.style.display = 'none';
+                alert('Your book has been processed and downloaded successfully!');
+            }).catch(error => {
+                console.error('Error:', error);
+                showError('There was an error processing your file: ' + error.message);
+                progressBar.style.display = 'none';
+                progressFill.style.width = '0%';
+            });
+        }
+
+        // ---- Form submission (local first, legacy fallback) ----
+        uploadForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            clearError();
+
+            if (!fileInput.files[0]) {
+                showError('Please select a file first.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+
+            // ---- Attempt local (in-browser) processing ----
+            const local = window.IntellireadingLocal;
+            if (local && (local.getStatus() === 'ready' || local.getStatus() === 'loading')) {
+                progressBar.style.display = 'block';
+                progressFill.style.width = '50%';
+
+                local.processFile(file).then(function(result) {
+                    downloadBlob(result.blob, result.fileName.replace('.epub', '_metaguided.epub'));
+                    resetForm();
+                    // Hide Turnstile and warning after successful local processing
+                    var turnstileWidget = document.getElementById('turnstile-widget');
+                    var warnEl = document.getElementById('legacy-warning');
+                    if (turnstileWidget) turnstileWidget.style.display = 'none';
+                    if (warnEl) warnEl.style.display = 'none';
+                    // Update status message to "Epub processing complete."
+                    const statusEl = document.getElementById('local-status');
+                    if (statusEl) {
+                        statusEl.textContent = 'Epub processing complete.';
+                        statusEl.style.display = 'block';
+                        statusEl.style.background = '#d1fae5';
+                        statusEl.style.color = '#065f46';
+                        statusEl.style.border = '1px solid #6ee7b7';
+                        // Hide the completion message after 3 seconds
+                        setTimeout(function() {
+                            statusEl.style.display = 'none';
+                        }, 3000);
+                    }
+                    alert('Your book has been processed and downloaded successfully!');
+                }).catch(function(err) {
+                    // Local processing failed – fall back to server
+                    console.warn('Intellireading: Local processing failed, using server fallback.', err);
+                    if (local.getStatus) local.showLegacyWarning();
+                    doLegacySubmit(file);
+                });
+                return;
+            }
+
+            // ---- Local processing not available – use legacy server path ----
+            if (local) local.showLegacyWarning();
+            doLegacySubmit(file);
         });
 
         // Scroll animations

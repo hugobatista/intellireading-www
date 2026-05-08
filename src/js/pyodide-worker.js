@@ -90,18 +90,12 @@ async function initialize(cdnUrl) {
     // Register the processing functions so JS can call them directly
     pyodide.runPython(`
 from io import BytesIO
-from intellireading.client import metaguide_epub_stream, metaguide_xhtml_stream
+from intellireading.client import metaguide_epub_stream
 
 def process_epub(input_bytes):
     """Metaguide an EPUB given raw bytes, return output bytes."""
     input_stream = BytesIO(input_bytes)
     output_stream = metaguide_epub_stream(input_stream)
-    return output_stream.getvalue()
-
-def process_xhtml(input_bytes):
-    """Metaguide an XHTML file given raw bytes, return output bytes."""
-    input_stream = BytesIO(input_bytes)
-    output_stream = metaguide_xhtml_stream(input_stream)
     return output_stream.getvalue()
 `);
 

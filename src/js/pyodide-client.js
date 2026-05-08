@@ -127,7 +127,11 @@
 
             case 'error':
                 status = 'error';
-                updateUI('Local processing unavailable: ' + msg.message, 0);
+                if (isSafari) {
+                    updateUI('Local processing unavailable in this browser. Using server conversion.', 0);
+                } else {
+                    updateUI('Local processing unavailable: ' + msg.message, 0);
+                }
                 enableLegacyMode();
                 if (processingReject) {
                     processingReject(new Error(msg.message));

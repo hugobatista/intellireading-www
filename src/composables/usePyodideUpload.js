@@ -21,47 +21,6 @@ export function usePyodideUpload({
   const metaguideEpubUrl = import.meta.env.VITE_METAGUIDE_EPUB_URL
   const pyodideCdnUrl = import.meta.env.VITE_PYODIDE_CDN_URL
 
-  const ALLOWED_CDN_DOMAINS = ['cdn.jsdelivr.net']
-
-  function validateCdnUrl(url) {
-    if (!url || typeof url !== 'string') {
-      console.error('Intellireading: CDN URL must be a non-empty string')
-      return false
-    }
-
-    let parsed
-    try {
-      parsed = new URL(url)
-    } catch (error) {
-      console.error('Intellireading: CDN URL is not valid:', url)
-      return false
-    }
-
-    if (parsed.protocol !== 'https:') {
-      console.error('Intellireading: CDN URL must use HTTPS. Got:', parsed.protocol)
-      return false
-    }
-
-    if (!parsed.pathname.endsWith('/pyodide.js')) {
-      console.error('Intellireading: CDN URL must end with /pyodide.js. Got:', parsed.pathname)
-      return false
-    }
-
-    const hostname = parsed.hostname
-    const isAllowed = ALLOWED_CDN_DOMAINS.some((domain) => hostname === domain || hostname.endsWith(`.${domain}`))
-
-    if (!isAllowed) {
-      console.error(
-        'Intellireading: CDN domain not allowed:',
-        hostname,
-        '. Allowed:',
-        ALLOWED_CDN_DOMAINS.join(', '),
-      )
-      return false
-    }
-
-    return true
-  }
 
   function getSafariVersion() {
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
@@ -211,10 +170,6 @@ export function usePyodideUpload({
       worker.addEventListener('error', onWorkerError)
 
       const cdnUrl = pyodideCdnUrl || 'https://cdn.jsdelivr.net/pyodide/v0.29.4/full/pyodide.js'
-      if (!validateCdnUrl(cdnUrl)) {
-        throw new Error('CDN URL validation failed. Check console for details.')
-      }
-
       worker.postMessage({ type: 'init', pyodideCdnUrl: cdnUrl })
       return true
     } catch (error) {
@@ -496,23 +451,6 @@ export function usePyodideUpload({
     })
   }
 
-  function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      if (anchor.dataset.smoothScroll === 'true') return
-
-      anchor.dataset.smoothScroll = 'true'
-      anchor.addEventListener('click', (event) => {
-        const href = anchor.getAttribute('href')
-        if (!href || href === '#') return
-
-        const target = document.querySelector(href)
-        if (!target) return
-
-        event.preventDefault()
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      })
-    })
-  }
 
   function initScrollAnimations() {
     if (!('IntersectionObserver' in window)) {
@@ -538,7 +476,6 @@ export function usePyodideUpload({
 
   function initialize() {
     registerServiceWorker()
-    initSmoothScroll()
     initScrollAnimations()
 
     if (errorDiv.value && errorDiv.value.textContent === '{{error}}') {

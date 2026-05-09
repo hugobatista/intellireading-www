@@ -47,7 +47,7 @@
           @drop.prevent="handleDrop"
         >
           <div class="upload-icon">📚</div>
-          <p style="margin-bottom: 1rem; color: var(--gray-600);">Drag &amp; drop your epub file here or</p>
+          <p class="upload-text-hint">Drag &amp; drop your epub file here or</p>
           <label for="file-input" class="upload-label">Choose File</label>
           <input
             id="file-input"
@@ -61,11 +61,7 @@
           />
 
           <div id="file-info" ref="fileInfo" class="file-info"></div>
-          <div
-            id="local-status"
-            ref="localStatus"
-            style="display: none; margin-top: 1rem; padding: 0.75rem; border-radius: 0.5rem; font-weight: 500; text-align: center;"
-          ></div>
+          <div id="local-status" ref="localStatus" class="status-panel"></div>
           <div id="progress-bar" ref="progressBar" class="progress-bar">
             <div id="progress-fill" ref="progressFill" class="progress-fill"></div>
           </div>
@@ -73,39 +69,30 @@
           <div
             id="local-capable-message"
             ref="localCapableMessage"
-            style="display: none; margin-top: 1rem; padding: 0.75rem; background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; border-radius: 0.5rem; font-weight: 500; text-align: center; font-size: 0.9rem;"
+            class="local-capable-message"
           >
             ✓ Local processing capability detected. Your EPUB will be processed locally in your browser - no data
             will be sent to our servers.
           </div>
 
-          <p
-            id="file-size-info"
-            ref="fileSizeInfo"
-            style="font-size: 0.875rem; color: var(--gray-500); margin-top: 1rem;"
-          >
+          <p id="file-size-info" ref="fileSizeInfo" class="file-size-info">
             Supported formats: EPUB / KEPUB (non-DRM) • Max size: 10MB<br />
-            By using the service, you agree to our <RouterLink to="/terms" style="color: var(--primary-600);">Terms of Service</RouterLink>
+            By using the service, you agree to our <RouterLink to="/terms" class="terms-link">Terms of Service</RouterLink>
           </p>
 
           <div
-            class="cf-turnstile"
+            class="cf-turnstile turnstile-container"
             ref="turnstileContainer"
             data-sitekey="0x4AAAAAAAEJQqP9fb7z_uOf"
-            style="margin: 1.5rem auto; display: none; justify-content: center;"
           ></div>
 
-          <div
-            id="legacy-warning"
-            ref="legacyWarning"
-            style="display: none; margin-top: 1rem; padding: 0.75rem; background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; border-radius: 0.5rem; font-weight: 500; text-align: center; font-size: 0.9rem;"
-          >
+          <div id="legacy-warning" ref="legacyWarning" class="legacy-warning">
             ⚠️ Your browser does not support local processing. We will fall back to server-based conversion, which
             is a legacy feature that will be deprecated during <strong>2026</strong>. For the best experience and
             offline support, please update to a modern browser that supports WebAssembly.
           </div>
 
-          <button type="submit" class="btn-primary" style="margin-top: 1rem;" :disabled="submitDisabled">
+          <button type="submit" class="btn-primary upload-submit" :disabled="submitDisabled">
             Process My Book
           </button>
           <div id="error" ref="errorDiv"></div>
@@ -245,11 +232,9 @@
                 <span class="metaguided-word"><span class="word-bold">ca</span>use</span>
                 <span class="metaguided-word"><span class="word-bold">fat</span>igue</span>.
               </div>
-              <p
-                style="font-size: 0.875rem; color: var(--gray-500); margin-top: 1rem; font-style: italic;"
-              >
-                ↑ The bolded first half of each word creates visual anchors that guide your reading flow
-              </p>
+          <p class="demo-caption">
+            ↑ The bolded first half of each word creates visual anchors that guide your reading flow
+          </p>
             </div>
           </div>
 
@@ -301,37 +286,29 @@
       </div>
     </section>
 
-    <section class="calibre-plugins" style="padding: 6rem 0; background: var(--primary-50);">
+    <section class="calibre-plugins">
       <div class="container">
-        <h2 class="section-title" style="color: var(--gray-900);">Seamless Integration with Calibre &amp; Kobo</h2>
-        <p class="section-subtitle" style="color: var(--gray-700);">
+        <h2 class="section-title">Seamless Integration with Calibre &amp; Kobo</h2>
+        <p class="section-subtitle">
           Skip the manual upload process! Use our Calibre plugins to automatically metaguide your ebooks when
           adding them to your library or transferring to your Kobo device.
         </p>
 
-        <div
-          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; margin-top: 4rem;"
-        >
-          <div
-            style="background: var(--white); padding: 2.5rem; border-radius: 1rem; box-shadow: var(--shadow-lg); text-align: center; border: 3px solid var(--primary-200); transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column;"
-          >
+        <div class="plugin-card-grid">
+          <div class="plugin-card primary">
             <div>
-              <div style="font-size: 4rem; margin-bottom: 1.5rem;">📚</div>
-              <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--primary-700);">
-                Epub Metaguider
-              </h3>
-              <p style="color: var(--gray-600); margin-bottom: 1.5rem; line-height: 1.6;">
+              <div class="plugin-card-icon">📚</div>
+              <h3 class="plugin-card-title primary">Epub Metaguider</h3>
+              <p class="plugin-card-description">
                 <strong>Interface Action Plugin</strong><br />
                 Adds convenient buttons to your Calibre toolbar and context menu, allowing you to generate
                 metaguided versions directly from your library interface.
               </p>
             </div>
-            <div style="margin-top: auto;">
-              <div
-                style="background: var(--primary-50); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--primary-600);"
-              >
-                <p style="font-size: 0.875rem; color: var(--gray-700); margin: 0;">
-                  <span style="font-weight: 600;">Perfect for:</span> Managing your entire ebook collection with
+            <div class="plugin-card-footer">
+              <div class="plugin-highlight">
+                <p class="plugin-highlight-text">
+                  <span class="plugin-highlight-label">Perfect for:</span> Managing your entire ebook collection with
                   metaguiding
                 </p>
               </div>
@@ -339,33 +316,27 @@
                 href="https://go.hugobatista.com/gh/intellireading-calibre-plugins"
                 target="_blank"
                 rel="noopener noreferrer"
-                style="display: inline-block; background: var(--primary-600); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; transition: background-color 0.3s ease;"
+                class="plugin-cta"
               >
                 Get Plugin from GitHub
               </a>
             </div>
           </div>
 
-          <div
-            style="background: var(--white); padding: 2.5rem; border-radius: 1rem; box-shadow: var(--shadow-lg); text-align: center; border: 3px solid var(--green-200); transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column;"
-          >
+          <div class="plugin-card secondary">
             <div>
-              <div style="font-size: 4rem; margin-bottom: 1.5rem;">⚡</div>
-              <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--green-700);">
-                KoboTouch Driver
-              </h3>
-              <p style="color: var(--gray-600); margin-bottom: 1.5rem; line-height: 1.6;">
+              <div class="plugin-card-icon">⚡</div>
+              <h3 class="plugin-card-title secondary">KoboTouch Driver</h3>
+              <p class="plugin-card-description">
                 <strong>Device Interface Plugin</strong><br />
                 Automatically generates metaguided versions when you send books to your Kobo device. No extra
                 steps needed!
               </p>
             </div>
-            <div style="margin-top: auto;">
-              <div
-                style="background: var(--green-50); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--green-600);"
-              >
-                <p style="font-size: 0.875rem; color: var(--gray-700); margin: 0;">
-                  <span style="font-weight: 600;">Perfect for:</span> Kobo device owners who want automatic
+            <div class="plugin-card-footer">
+              <div class="plugin-highlight secondary">
+                <p class="plugin-highlight-text">
+                  <span class="plugin-highlight-label">Perfect for:</span> Kobo device owners who want automatic
                   metaguiding
                 </p>
               </div>
@@ -373,7 +344,7 @@
                 href="https://go.hugobatista.com/gh/intellireading-calibre-plugins"
                 target="_blank"
                 rel="noopener noreferrer"
-                style="display: inline-block; background: var(--primary-600); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; transition: background-color 0.3s ease;"
+                class="plugin-cta"
               >
                 Get Plugin from GitHub
               </a>
@@ -381,34 +352,16 @@
           </div>
         </div>
 
-        <div
-          style="background: var(--white); border-radius: 1rem; padding: 2rem; margin-top: 3rem; border: 2px solid var(--gray-200); text-align: center;"
-        >
-          <h4
-            style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--gray-900);"
-          >
-            📦 Easy Installation
-          </h4>
-          <p style="color: var(--gray-600); margin-bottom: 1.5rem; line-height: 1.6;">
+        <div class="plugin-installation">
+          <h4 class="plugin-installation-title">📦 Easy Installation</h4>
+          <p class="plugin-installation-text">
             Both plugins are available in the <strong>Calibre Plugin Store</strong> for easy installation, or you
             can download them manually from our GitHub repository. Compatible with Calibre 8.4.0 and above.
           </p>
-          <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-            <span
-              style="background: var(--gray-100); color: var(--gray-700); padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 500;"
-            >
-              🔌 Calibre Plugin Store
-            </span>
-            <span
-              style="background: var(--gray-100); color: var(--gray-700); padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 500;"
-            >
-              📥 Manual Installation
-            </span>
-            <span
-              style="background: var(--gray-100); color: var(--gray-700); padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 500;"
-            >
-              ✅ Calibre 8.4.0+
-            </span>
+          <div class="plugin-pill-group">
+            <span class="plugin-pill">🔌 Calibre Plugin Store</span>
+            <span class="plugin-pill">📥 Manual Installation</span>
+            <span class="plugin-pill">✅ Calibre 8.4.0+</span>
           </div>
         </div>
       </div>
@@ -476,33 +429,31 @@
         <p class="cta-subtitle">
           Join thousands of readers who've accelerated their reading speed with Intellireading
         </p>
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+        <div class="cta-stack">
           <a href="#upload" class="cta-button">Transform Your First Book Free</a>
-          <p style="font-size: 0.95rem; opacity: 0.8; margin: 0;">
+          <p class="cta-muted">
             Or install our
             <a
               href="https://go.hugobatista.com/gh/intellireading-calibre-plugins"
               target="_blank"
               rel="noopener noreferrer"
-              style="color: var(--primary-300); text-decoration: underline;"
+              class="cta-link"
             >
               Calibre plugins
             </a>
             for seamless integration
           </p>
-          <div
-            style="margin-top: 1rem; padding: 1.5rem; border-radius: 0.75rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); text-align: center;"
-          >
-            <p style="font-size: 1.125rem; margin-bottom: 1rem; color: white; opacity: 0.9;">
+          <div class="cta-donate">
+            <p class="cta-donate-text">
               ❤️ Love Intellireading? Help us keep it free for everyone
             </p>
             <a
               href="https://go.hugobatista.com/donate-intellireading"
               target="_blank"
               rel="noopener noreferrer"
-              style="display: inline-flex; align-items: center; gap: 0.75rem; background: #f59e0b; color: white; padding: 0.875rem 2rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); border: none;"
+              class="cta-donate-button"
             >
-              <span style="font-size: 1.25rem;">💝</span>
+              <span class="cta-donate-icon">💝</span>
               Support Our Mission
             </a>
           </div>

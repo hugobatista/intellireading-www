@@ -22,9 +22,9 @@ RUN useradd -r -m wwwuser && \
 # Copy custom nginx configuration
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
-# Copy the content of the local src directory (containing your website files)
-# to the document root of Nginx in the container
-COPY ./src/. /usr/share/nginx/html
+# Copy the content of the local dist directory (built site) to the document root
+# of Nginx in the container
+COPY ./dist/. /usr/share/nginx/html
 
 # Switch to the 'wwwuser' for running the Nginx server
 # This enhances security by avoiding running the server as root

@@ -32,7 +32,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.6.0
 
-      # Run a build step here if your project requires
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build site
+        run: npm run build
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
@@ -40,7 +49,7 @@ jobs:
           apiToken: ${{ secrets.CLOUFLARE_EDIT_PAGES_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: www-intellireading
-          directory: src
+          directory: dist
           branch: main
           # Optional: Change the Wrangler version, allows you to point to 
           # a specific version or a tag such as `beta`

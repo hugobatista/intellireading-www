@@ -1,14 +1,14 @@
-![Intellireading.com](https://go.hugobatista.com/ghraw/intellireading-www/main/src/img/intellireading.png)
-# Static website sources
+![Intellireading.com](https://go.hugobatista.com/ghraw/intellireading-www/main/public/img/intellireading.png)
+# Vite + Vue website
 [![Deploy to Clouflare](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/deploy-to-cloudflare.yml/badge.svg)](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/deploy-to-cloudflare.yml)
 [![Deploy to ghcr.io](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/build-and-publish-to-ghcr.yml/badge.svg)](https://go.hugobatista.com/gh/intellireading-www/actions/workflows/build-and-publish-to-ghcr.yml)
 
-This repo holds the static website for [Intellireading.com](https://intellireading.com).
-It is a simple static site that invokes the [Intellireading Backend API](https://go.hugobatista.com/gh/intellireading-api_server) allowing users to convert Epub files to a metaguided format. 
+This repo holds the Vite + Vue website for [Intellireading.com](https://intellireading.com).
+It is a Vite-built SPA that invokes the [Intellireading Backend API](https://go.hugobatista.com/gh/intellireading-api_server) allowing users to convert Epub files to a metaguided format. 
 Update at 2026-04: The website also supports offline conversion of Epub files using WebAssembly, so it can be used without an internet connection.
 
 Example of a text converted to a metaguided text:
-![Intellireading.com](https://go.hugobatista.com/ghraw/intellireading-www/main/src/img/sample.png) 
+![Intellireading.com](https://go.hugobatista.com/ghraw/intellireading-www/main/public/img/sample.png) 
 
 
 This website is part of the [Intellireading](https://intellireading.com/) project, which aims to help people with dyslexia, ADHD, or anyone who wants to improve their reading focus and speed. 
@@ -18,6 +18,37 @@ This website is part of the [Intellireading](https://intellireading.com/) projec
 - [API Server](https://go.hugobatista.com/gh/intellireading-api_server), that support the Intellireading website.
 - [CLI Tool](https://go.hugobatista.com/gh/intellireading-cli). A standalone tool and library that can be used to metaguide epub files.
 - [Calibre Plugins](https://go.hugobatista.com/gh/intellireading-calibre-plugins). A set of plugins that can be used to metaguide epub files using Calibre.
+
+## Development
+
+```sh
+npm install
+npm run dev
+```
+
+For a production-like container:
+
+```sh
+npm run build
+docker compose up --build
+```
+
+### Environment variables
+
+Vite uses `.env` files for API URLs:
+
+- `.env.example` for local defaults
+- `.env.production` for production builds (checked in)
+
+Required variables:
+
+- `VITE_METAGUIDE_EPUB_URL`
+- `VITE_PYODIDE_CDN_URL`
+
+## Deployment
+
+- Cloudflare Pages publishes `dist/` after `npm run build`.
+- GHCR Docker images are built from the `dist/` output.
 
 ## What is Epub Metaguiding?
 **Metagu**iding **i**s **a** **techn**ique **th**at **ca**n **b**e **us**ed **t**o **impr**ove **yo**ur **read**ing **foc**us **an**d **spe**ed **(some**times **cal**led **Bio**nic **Readi**ng). **I**t **i**s **bas**ed **o**n **th**e **id**ea **th**at **yo**u **ca**n **us**e **a** **vis**ual **gui**de **t**o **he**lp **yo**ur **ey**es **foc**us **o**n **th**e **te**xt **yo**u **ar**e **read**ing. **I**n **th**is **cas**e, **th**e **vis**ual **gui**de **i**s **do**ne **b**y **bold**ing **a** **pa**rt **o**f **th**e **tex**t, **crea**ting **vis**ual **anch**ors **th**at **yo**ur **ey**es **ca**n **us**e **t**o **foc**us **o**n **th**e **tex**t. **Th**is **i**s **simi**lar **t**o **th**e **wa**y **a** **fin**ger **ca**n **b**e **us**ed **t**o **gui**de **yo**ur **ey**es **alo**ng **a** **li**ne **o**f **tex**t, **whi**ch **ha**s **be**en **sho**wn **t**o **impr**ove **read**ing **spe**ed **an**d **foc**us. ([**stu**dy: **"Do**es **finger-t**racking **poi**nt **t**o **chi**ld **read**ing **strate**gies"](https://ceur-ws.org/Vol-2769/paper_60.pdf))

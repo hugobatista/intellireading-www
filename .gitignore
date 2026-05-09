@@ -7,6 +7,7 @@ pnpm-debug.log*
 
 # Dependencies
 node_modules
+.vite
 
 # Build output
 dist

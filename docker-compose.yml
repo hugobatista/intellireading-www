@@ -12,7 +12,7 @@ services:
     restart: "no"
     volumes:
       - ./log:/var/log/www
-      - ./config/dev/config.js:/usr/share/nginx/html/js/config.js
+      - ./dist:/usr/share/nginx/html
     image: intellireading-www
     ports:
       - 8080:8080

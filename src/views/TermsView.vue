@@ -1,0 +1,256 @@
+<template>
+  <main class="main">
+    <div class="container">
+      <h1 class="page-title">Terms of Service</h1>
+
+      <div class="section">
+        <h2 class="section-title">Service Description</h2>
+        <div class="section-content">
+          <p>
+            Our service allows users to submit epub files for processing. The processing may include various
+            reading enhancement features, as well as additional features that we may introduce in the future. We
+            are committed to enhancing the reading experience for our users and will continue to explore new
+            ways to achieve this goal.
+          </p>
+          <p>
+            We only process non-DRM protected epub files, so unfortunately, we can't help you read your
+            collection of illegally downloaded books. Think of us as your personal reading coach, minus the
+            whistle and sweatband.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">User Responsibilities</h2>
+        <div class="section-content">
+          <p>
+            The user is responsible for ensuring that they have the legal right to submit the epub file to our
+            service. If you're not sure if you have the right to submit a particular book, please consult your
+            lawyer or psychic for guidance. We trust that you won't submit your ex's tell-all memoir or the
+            secret recipe for Colonel Sanders' fried chicken.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Data Collection and Use</h2>
+        <div class="section-content">
+          <p>
+            We take data privacy seriously and do not keep any user data or use cookies. However, we may need to
+            collect some data to operate the service, such as troubleshooting and monitoring performance. Rest
+            assured, we won't use this data to spy on you or steal your identity, nor are we secretly collecting
+            your browsing history or online shopping habits (although we do recommend you splurge on a new book
+            every once in a while).
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Use of Third-Party Services for Processing</h2>
+        <div class="section-content">
+          <p>
+            While processing documents, our service may need to submit parts or the entirety of the submitted
+            documents to external services. These services may include our trusted friends like machine learning
+            models, language translation services, or even some AI friends that we just met. We promise to make
+            sure they don't tell any embarrassing secrets about you!
+          </p>
+          <p>
+            We take great care to ensure the security and privacy of any data transmitted to external services,
+            and we will only do so when necessary for the proper functioning of our service. We do not retain
+            any data submitted to external services beyond what is necessary for the processing of the
+            documents. By using our service, you acknowledge and consent to the transmission of your data to
+            external services in accordance with this clause.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Data Security</h2>
+        <div class="section-content">
+          <p>
+            We use reasonable measures to protect user data, but we're not quite as secure as Fort Knox. So, if
+            you have any state secrets or confidential information to protect, it's probably best to keep it
+            offline. We can't promise that our servers are protected by an impenetrable fortress guarded by
+            dragons. Please don't hack us, we bruise easily.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Limitation of Liability</h2>
+        <div class="section-content">
+          <p>
+            We're not responsible for any damages or losses that may result from the use of our service, unless
+            of course, our service inadvertently causes you to develop an unhealthy addiction to reading. In
+            that case, we'll be happy to provide you with a list of local book clubs to help feed your habit.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Changes to Terms of Service</h2>
+        <div class="section-content">
+          <p>
+            We reserve the right to update or modify these terms of service at any time. Don't worry, we won't
+            suddenly start requiring you to read books upside down or in Pig Latin (although that would be pretty
+            impressive).
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Governing Law and Jurisdiction</h2>
+        <div class="section-content">
+          <p>
+            These terms of service shall be governed by and construed in accordance with the laws of European
+            Union, without regard to its conflicts of law provisions. Any disputes arising under or related to
+            these terms of service shall be resolved exclusively by a dance-off. In the unlikely event of a legal
+            dispute, we suggest we settle it the old-fashioned way: with a good, old-fashioned thumb war.
+          </p>
+          <p>
+            These terms of service are governed by and construed in accordance with the laws of the European
+            Union. Any disputes arising out of or related to these terms will be resolved in accordance with the
+            EU's legal system. We hope it never comes to that, but if it does, we'll be sure to brush up on our
+            legal jargon.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Intellectual Property</h2>
+        <div class="section-content">
+          <p>
+            We respect the intellectual property rights of others and expect our users to do the same. Please
+            don't submit content that you don't have the rights to, such as copyrighted material or someone
+            else's unpublished work.
+          </p>
+          <p>We won't hesitate to turn into literary superheroes to protect the rights of authors everywhere.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Service Interruptions</h2>
+        <div class="section-content">
+          <p>
+            We strive to keep our service up and running at all times, but sometimes even the most well-behaved
+            servers need a break. We'll do our best to notify you of any scheduled maintenance or service
+            interruptions, but we can't promise that we'll always be available.
+          </p>
+          <p>
+            In the event of an unexpected outage, we suggest taking a break from the internet and diving into a
+            good book instead. It's a win-win for your eyes and your imagination.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">User Conduct</h2>
+        <div class="section-content">
+          <p>
+            We expect all users to behave appropriately and respectfully while using our service. This includes
+            refraining from submitting content that is defamatory, discriminatory, or otherwise offensive. We
+            believe in the power of diverse voices and perspectives, but let's keep it civil, folks.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Termination</h2>
+        <div class="section-content">
+          <p>
+            We reserve the right to terminate a user's access to our service at any time, for any reason. This
+            could include violation of these terms of service, inappropriate conduct, or just a general feeling
+            of being too cool for school. Don't worry, we'll give you plenty of notice before we break up with
+            you.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Feedback and Suggestions</h2>
+        <div class="section-content">
+          <p>
+            We love hearing from our users! If you have any feedback or suggestions for how we can improve our
+            service, we'd be happy to hear it. Just don't suggest that we stop encouraging people to read. That's
+            like asking a fish to stop swimming - it just doesn't make sense.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Age Restriction</h2>
+        <div class="section-content">
+          <p>
+            Our service is intended for users who are at least 13 years old. If you're under 13, please ask your
+            parent or legal guardian to submit content on your behalf. We love young readers, but we want to make
+            sure everyone is safe and compliant with the Children's Online Privacy Protection Act (COPPA).
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Third-Party Links</h2>
+        <div class="section-content">
+          <p>
+            We may include links to third-party websites or services on our site for your convenience or
+            reference. However, we can't guarantee the safety or accuracy of these links, and we're not
+            responsible for any content or actions on those third-party sites. As always, use your best judgement
+            when clicking on links and be wary of any fishy business.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="section-content">
+          <p>
+            If you have any questions or concerns regarding these terms of service, please contact us at
+            intellireading at hugobatista.com. We'll do our best to respond to your inquiry within 48 hours
+            (although we may need to take a break to read a book).
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+</template>
+
+<style scoped>
+.main {
+  padding: 4rem 0;
+}
+
+.page-title {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  color: var(--gray-900);
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 1rem;
+}
+
+.section-content {
+  color: var(--gray-600);
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.section-content p {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2rem;
+  }
+}
+</style>

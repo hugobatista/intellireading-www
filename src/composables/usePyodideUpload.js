@@ -10,6 +10,7 @@ export function usePyodideUpload({
   legacyWarning,
   localCapableMessage,
   fileSizeInfo,
+  turnstileContainer,
   submitDisabled,
 }) {
   let worker = null
@@ -115,9 +116,10 @@ export function usePyodideUpload({
   }
 
   function enableLegacyMode() {
-    const turnstileWidget = document.querySelector('.cf-turnstile')
+    const turnstileWidget = turnstileContainer?.value || document.querySelector('.cf-turnstile')
     if (turnstileWidget) {
       turnstileWidget.style.display = 'flex'
+      renderTurnstile(turnstileWidget)
     }
     showLegacyWarning()
     notifyStatusChange()
@@ -360,9 +362,10 @@ export function usePyodideUpload({
       return
     }
 
-    const turnstileWidget = document.querySelector('.cf-turnstile')
+    const turnstileWidget = turnstileContainer?.value || document.querySelector('.cf-turnstile')
     if (turnstileWidget) {
       turnstileWidget.style.display = 'flex'
+      renderTurnstile(turnstileWidget)
     }
 
     const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]')
@@ -560,6 +563,26 @@ export function usePyodideUpload({
       setTimeout(() => {
         notifyStatusChange()
       }, 100)
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('load', () => {
+      const widget = turnstileContainer?.value
+      if (widget && widget.style.display === 'flex') {
+        renderTurnstile(widget)
+      }
+    })
+  }
+
+  function renderTurnstile(container) {
+    if (!window.turnstile || !container) return
+    if (container.querySelector('iframe')) return
+
+    try {
+      window.turnstile.render(container)
+    } catch (error) {
+      console.warn('Intellireading: Turnstile render failed', error)
     }
   }
 

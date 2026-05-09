@@ -90,6 +90,7 @@
 
           <div
             class="cf-turnstile"
+            ref="turnstileContainer"
             data-sitekey="0x4AAAAAAAEJQqP9fb7z_uOf"
             style="margin: 1.5rem auto; display: none; justify-content: center;"
           ></div>
@@ -526,6 +527,7 @@ const localStatus = ref(null)
 const legacyWarning = ref(null)
 const localCapableMessage = ref(null)
 const fileSizeInfo = ref(null)
+const turnstileContainer = ref(null)
 const submitDisabled = ref(true)
 
 const {
@@ -546,6 +548,7 @@ const {
   legacyWarning,
   localCapableMessage,
   fileSizeInfo,
+  turnstileContainer,
   submitDisabled,
 })
 

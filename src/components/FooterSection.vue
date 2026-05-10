@@ -59,6 +59,7 @@
 
       <div class="footer-bottom">
         <p>&copy; 2025 Hugo Batista. All rights reserved.</p>
+        <p class="footer-version">v{{ version }}</p>
       </div>
     </div>
   </footer>
@@ -66,4 +67,7 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import pkg from '../../package.json'
+
+const version = pkg.version
 </script>

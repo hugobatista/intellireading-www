@@ -250,43 +250,54 @@
       </div>
     </section>
 
+    <!-- FAQ Section -->
     <section id="faq" class="faq-section">
       <div class="container">
-        <h2 class="section-title">FAQ</h2>
+        <h2 class="section-title">Frequently Asked Questions About Speed Reading, Dyslexia & ADHD Reading Tools</h2>
+        <p class="section-subtitle">
+          Everything you need to know about Intellireading, Metaguiding, and how it helps with dyslexia, ADHD, and faster reading
+        </p>
 
         <div class="faq-list">
           <div class="faq-item">
-            <h3 class="faq-question">How does this help with dyslexia or ADHD?</h3>
+            <h3 class="faq-question">Does Intellireading help with dyslexia?</h3>
             <p class="faq-answer">
-              The bolded word halves act as visual anchors that guide your eyes across the line, reducing the tendency to skip words or lose your place. Many readers with dyslexia or ADHD find this makes reading less tiring and easier to sustain.
+              Yes. Intellireading's Metaguiding technology creates visual anchors that help guide your eyes and improve focus, which can significantly assist people with dyslexia. By reducing eye regression and providing structured visual guides, readers with dyslexia can read with less effort and improved comprehension. The bolded word halves provide natural waypoints that reduce the tendency to skip lines or lose your place.
             </p>
           </div>
 
           <div class="faq-item">
-            <h3 class="faq-question">Will this work on my e-reader?</h3>
+            <h3 class="faq-question">Is Intellireading good for ADHD readers?</h3>
             <p class="faq-answer">
-              Yes. The processed EPUB uses standard formatting that works on Kindle (via Send to Kindle or Calibre), Kobo, Apple Books, Google Play Books, and any other EPUB-compatible device or app.
+              Absolutely. Metaguiding provides continuous visual guides that keep your attention engaged with every word. For readers with ADHD who struggle with sustained focus, the bolded word segments create a rhythmic reading flow that helps prevent attention drift. Many ADHD users report this technology is genuinely transformative for staying engaged during reading sessions, whether for work, study, or leisure.
             </p>
           </div>
 
           <div class="faq-item">
-            <h3 class="faq-question">Is there a limit on file size?</h3>
+            <h3 class="faq-question">How do visual reading guides help with faster reading?</h3>
             <p class="faq-answer">
-              The web tool accepts files up to 10MB. For larger books, use our <a href="https://go.hugobatista.com/gh/intellireading-calibre-plugins" target="_blank" rel="noopener noreferrer">Calibre plugins</a> which have no size limit.
+              Visual reading guides work by bolding the first portion of each word, creating natural anchors that guide your eyes across the text. This reduces the time your brain spends processing each word and minimizes regression, allowing for smoother and faster reading. The technique is similar to how guide dogs assist visually impaired people — the bolded segments act as a guide for your eyes, reducing cognitive load and enabling higher reading speeds while maintaining full comprehension.
             </p>
           </div>
 
           <div class="faq-item">
-            <h3 class="faq-question">What about DRM-protected books?</h3>
+            <h3 class="faq-question">Does Intellireading work on Kindle and Kobo?</h3>
             <p class="faq-answer">
-              We only process non-DRM EPUB files. You'll need to remove DRM from purchased books using tools like Calibre's DeDRM plugin before uploading.
+              Yes. Intellireading works with any device that supports epub format. The enhanced epub files can be transferred to Kindle, Kobo, Apple Books, and other e-readers. We also offer dedicated Calibre plugins for Kobo users that automatically apply metaguiding when transferring books, making the process seamless. Kindle users can easily transfer the processed epub files using Calibre or Amazon's Send to Kindle service.
             </p>
           </div>
 
           <div class="faq-item">
-            <h3 class="faq-question">Is this like Bionic Reading?</h3>
+            <h3 class="faq-question">Is Intellireading free?</h3>
             <p class="faq-answer">
-              Similar concept — both use typographic highlighting to guide reading. Our approach uses a simple algorithm that bolds approximately the first half of each word, which research suggests can help reduce regression and improve reading flow.
+              Yes. Intellireading is completely free with no subscriptions, no hidden fees, and no limits. You can transform unlimited epub files at no cost. We're committed to keeping accessibility tools for dyslexia, ADHD, and speed reading available to everyone who needs them.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">Will the metaguided text work on my e-reader?</h3>
+            <p class="faq-answer">
+              Yes. The metaguiding is applied directly into the epub file's content, so it renders on any device or app that supports standard epub format. This includes Kindle (via Send to Kindle or Calibre), Kobo, Apple Books, Google Play Books, and dedicated e-reader apps. The enhanced text displays the bolded word halves natively on your reading device.
             </p>
           </div>
         </div>

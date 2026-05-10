@@ -2,7 +2,7 @@
   <header class="header">
     <nav class="nav container">
       <RouterLink to="/" class="logo-link">
-        <img src="/img/intellireading.png" alt="Intellireading" class="logo" />
+        <img src="/img/intellireading.png" alt="Intellireading - Speed Reading & Reading Enhancement for Dyslexia & ADHD" class="logo" />
       </RouterLink>
       <ul class="nav-links" :class="{ active: mobileMenuOpen }">
         <li>
@@ -15,11 +15,14 @@
           <RouterLink to="/#how-it-works" class="nav-link">How It Works</RouterLink>
         </li>
         <li>
+          <RouterLink to="/#faq" class="nav-link">FAQ</RouterLink>
+        </li>
+        <li>
           <RouterLink to="/terms" class="nav-link">Terms</RouterLink>
         </li>
       </ul>
       <div class="nav-controls">
-        <RouterLink to="/#upload" class="nav-cta">Try Free</RouterLink>
+        <RouterLink to="/#upload" class="nav-cta">Use it Free</RouterLink>
         <button class="theme-toggle" type="button" aria-label="Toggle dark mode" @click="toggleTheme">
           <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
             <path

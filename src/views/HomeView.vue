@@ -3,10 +3,9 @@
     <section class="hero">
       <div class="container">
         <div class="hero-content fade-in-up">
-          <h1>Read 30% Faster with AI Metaguiding</h1>
+          <h1>Speed Reading & Visual Reading Guides for Dyslexia, ADHD & Faster Reading</h1>
           <p class="hero-subtitle">
-            Transform your ebooks with our AI Metaguiding algorithms. Never skim again.
-            Free epub processing service.
+            Accelerate your reading speed by 30% with advanced Metaguiding technology. Support for dyslexia, ADHD focus, and faster reading techniques. Free epub processing service.
           </p>
 
           <div class="hero-stats">
@@ -22,6 +21,71 @@
               <span class="stat-number">1000+</span>
               <span class="stat-label">Books Processed</span>
             </div>
+          </div>
+
+          <div class="hero-cta-group">
+            <a href="#upload" class="cta-hero-button">Transform Your Book Now</a>
+            <p class="hero-cta-text">Or scroll to see how Metaguiding works for dyslexia, ADHD, and faster reading</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who This Is For Section -->
+    <section class="who-this-is-for">
+      <div class="container">
+        <h2 class="section-title">Who This Is For</h2>
+        <p class="section-subtitle">
+          Intellireading helps readers of all backgrounds improve their reading experience with Metaguiding techniques
+        </p>
+
+        <div class="use-cases-grid">
+          <div class="use-case-card">
+            <div class="use-case-icon">📚</div>
+            <h3 class="use-case-title">Speed Readers</h3>
+            <p class="use-case-description">
+              Accelerate your reading speed by 30% with visual guides. Maintain comprehension while reading faster than ever before.
+            </p>
+          </div>
+
+          <div class="use-case-card">
+            <div class="use-case-icon">🎯</div>
+            <h3 class="use-case-title">ADHD Readers</h3>
+            <p class="use-case-description">
+              Stay focused throughout your reading sessions. Metaguiding provides continuous visual anchors that prevent attention drift and improve engagement.
+            </p>
+          </div>
+
+          <div class="use-case-card">
+            <div class="use-case-icon">✨</div>
+            <h3 class="use-case-title">Dyslexic Readers</h3>
+            <p class="use-case-description">
+              Reduce eye regression and improve reading flow with visual structure. Metaguiding helps you read with less effort and improved comprehension.
+            </p>
+          </div>
+
+          <div class="use-case-card">
+            <div class="use-case-icon">🎓</div>
+            <h3 class="use-case-title">Students</h3>
+            <p class="use-case-description">
+              Get through textbooks and study materials faster. Visual reading techniques help you retain more information while saving study time.
+            </p>
+          </div>
+
+          <div class="use-case-card">
+            <div class="use-case-icon">💼</div>
+            <h3 class="use-case-title">Professionals</h3>
+            <p class="use-case-description">
+              Read faster while maintaining focus and comprehension. Ideal for staying on top of industry publications, research, and professional development.
+            </p>
+          </div>
+
+          <div class="use-case-card">
+            <div class="use-case-icon">❤️</div>
+            <h3 class="use-case-title">Avid Readers</h3>
+            <p class="use-case-description">
+              Read more books in less time with improved focus. Experience enhanced engagement and reduced skimming with Metaguiding technology.
+            </p>
           </div>
         </div>
       </div>
@@ -102,62 +166,57 @@
 
     <section id="features" class="features">
       <div class="container">
-        <h2 class="section-title">Why Intellireading?</h2>
+        <h2 class="section-title">Why Intellireading? Advanced Reading Enhancement & Dyslexia Support</h2>
         <p class="section-subtitle">
-          Our advanced AI Metaguiding algorithms transform your reading experience with proven techniques
+          Our Metaguiding technology combines speed reading techniques with ADHD support and dyslexia assistance
         </p>
 
         <div class="features-grid">
           <div class="feature-card">
             <div class="feature-icon">🎯</div>
-            <h3 class="feature-title">Enhanced Focus</h3>
+            <h3 class="feature-title">Enhanced Focus for ADHD & Dyslexia</h3>
             <p class="feature-description">
-              Advanced metaguiding creates visual anchors that guide your eyes and help your brain stay focused
-              throughout your reading session.
+              Advanced metaguiding creates visual anchors that guide your eyes and help your brain stay focused. Perfect for ADHD readers and those with dyslexia who struggle with sustained attention.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">⚡</div>
-            <h3 class="feature-title">30% Faster Reading</h3>
+            <h3 class="feature-title">30% Faster Reading Speed</h3>
             <p class="feature-description">
-              Scientifically proven metaguiding techniques help you read significantly faster while maintaining
-              comprehension.
+              Metaguiding and visual reading techniques help you read significantly faster while maintaining comprehension. Speed reading has never been this natural.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">🚫</div>
-            <h3 class="feature-title">No More Skimming</h3>
+            <h3 class="feature-title">No More Skimming & Regression</h3>
             <p class="feature-description">
-              Eliminates the tendency to skim by providing visual guides that keep you engaged with every word.
+              Eliminates the tendency to skim by providing visual guides that keep you engaged with every word. Reduces eye regression common in dyslexia and speed reading challenges.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">📱</div>
-            <h3 class="feature-title">Works Everywhere</h3>
+            <h3 class="feature-title">Works Everywhere Including Kobo & Kindle</h3>
             <p class="feature-description">
-              Compatible with all major e-readers including Kindle, Kobo, and any device that supports epub
-              format. Plus, seamless Calibre integration with our dedicated plugins.
+              Compatible with all major e-readers including Kindle, Kobo, and any device supporting epub format plus dedicated Calibre plugins for seamless integration.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">🔒</div>
-            <h3 class="feature-title">Privacy First</h3>
+            <h3 class="feature-title">Privacy First - We Don't Store Your Data</h3>
             <p class="feature-description">
-              We don't store your books or personal data. Your files are processed and immediately deleted from
-              our servers.
+              Your books and personal data are never stored. Files are processed and immediately deleted from servers perfect for sensitive materials.
             </p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">🆓</div>
-            <h3 class="feature-title">Completely Free</h3>
+            <h3 class="feature-title">Completely Free Unlimited Reading Support</h3>
             <p class="feature-description">
-              No subscriptions, no hidden fees. Transform unlimited epub files at no cost to accelerate your
-              reading journey.
+              No subscriptions no hidden fees. Transform unlimited epub files at no cost with visual guides and speed reading enhancements.
             </p>
           </div>
         </div>
@@ -166,10 +225,9 @@
 
     <section id="demo" class="demo-section">
       <div class="container">
-        <h2 class="section-title">See Metaguiding in Action</h2>
+        <h2 class="section-title">See Metaguiding in Action - Visual Reading Guide Demo</h2>
         <p class="section-subtitle">
-          Experience the difference between normal text and enhanced text that uses visual guides to improve
-          focus and reading speed
+          Experience the difference between normal text and enhanced text with visual guides for ADHD and dyslexia. Bolded word halves create reading anchors that improve focus and reading speed.
         </p>
 
         <div class="demo-container">
@@ -239,7 +297,7 @@
           </div>
 
           <div class="demo-image">
-            <img src="/img/ereader1.jpeg" alt="E-reader showing metaguided text in action" loading="lazy" />
+            <img src="/img/ereader1.jpeg" alt="E-reader showing metaguided text with visual reading guides in action - speed reading and dyslexia support" loading="lazy" />
             <div class="demo-overlay">
               <div>See it in action on your e-reader</div>
             </div>
@@ -267,7 +325,7 @@
 
           <div class="step">
             <div class="step-number">2</div>
-            <h3 class="step-title">AI Processing</h3>
+            <h3 class="step-title">Processing</h3>
             <p class="step-description">
               Our system analyzes your book and applies metaguiding by applying visual anchors to enhance
               reading focus and speed.
@@ -280,6 +338,60 @@
             <p class="step-description">
               Download your enhanced ebook and transfer it to any e-reader. Start reading 30% faster with better
               comprehension.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+      <div class="container">
+        <h2 class="section-title">Frequently Asked Questions About Speed Reading, Dyslexia & ADHD Reading Tools</h2>
+        <p class="section-subtitle">
+          Everything you need to know about Intellireading, Metaguiding, and how it helps with dyslexia, ADHD, and faster reading
+        </p>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3 class="faq-question">Does Intellireading help with dyslexia?</h3>
+            <p class="faq-answer">
+              Yes. Intellireading's Metaguiding technology creates visual anchors that help guide your eyes and improve focus, which can significantly assist people with dyslexia. By reducing eye regression and providing structured visual guides, readers with dyslexia can read with less effort and improved comprehension. The bolded word halves provide natural waypoints that reduce the tendency to skip lines or lose your place.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">Is Intellireading good for ADHD readers?</h3>
+            <p class="faq-answer">
+              Absolutely. Metaguiding provides continuous visual guides that keep your attention engaged with every word. For readers with ADHD who struggle with sustained focus, the bolded word segments create a rhythmic reading flow that helps prevent attention drift. Many ADHD users report this technology is genuinely transformative for staying engaged during reading sessions, whether for work, study, or leisure.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">How do visual reading guides help with faster reading?</h3>
+            <p class="faq-answer">
+              Visual reading guides work by bolding the first portion of each word, creating natural anchors that guide your eyes across the text. This reduces the time your brain spends processing each word and minimizes regression, allowing for smoother and faster reading. The technique is similar to how guide dogs assist visually impaired people — the bolded segments act as a guide for your eyes, reducing cognitive load and enabling higher reading speeds while maintaining full comprehension.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">Does Intellireading work on Kindle and Kobo?</h3>
+            <p class="faq-answer">
+              Yes. Intellireading works with any device that supports epub format. The enhanced epub files can be transferred to Kindle, Kobo, Apple Books, and other e-readers. We also offer dedicated Calibre plugins for Kobo users that automatically apply metaguiding when transferring books, making the process seamless. Kindle users can easily transfer the processed epub files using Calibre or Amazon's Send to Kindle service.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">Is Intellireading free?</h3>
+            <p class="faq-answer">
+              Yes. Intellireading is completely free with no subscriptions, no hidden fees, and no limits. You can transform unlimited epub files at no cost. We're committed to keeping accessibility tools for dyslexia, ADHD, and speed reading available to everyone who needs them.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">Will the metaguided text work on my e-reader?</h3>
+            <p class="faq-answer">
+              Yes. The metaguiding is applied directly into the epub file's content, so it renders on any device or app that supports standard epub format. This includes Kindle (via Send to Kindle or Calibre), Kobo, Apple Books, Google Play Books, and dedicated e-reader apps. The enhanced text displays the bolded word halves natively on your reading device.
             </p>
           </div>
         </div>
@@ -369,7 +481,10 @@
 
     <section class="social-proof">
       <div class="container">
-        <h2 class="section-title">What Readers Are Saying</h2>
+        <h2 class="section-title">What Readers Are Saying About Speed Reading & ADHD Focus</h2>
+        <p class="section-subtitle">
+          Hear from real users including ADHD and dyslexia readers who transformed their reading experience
+        </p>
 
         <div class="testimonials">
           <div class="testimonial">
@@ -425,9 +540,9 @@
 
     <section class="cta-section">
       <div class="container">
-        <h2 class="cta-title">Ready to Read Faster?</h2>
+        <h2 class="cta-title">Ready to Read Faster with Visual Reading Guides & ADHD Support?</h2>
         <p class="cta-subtitle">
-          Join thousands of readers who've accelerated their reading speed with Intellireading
+          Join thousands of readers including those with dyslexia and ADHD who've accelerated their reading speed with Intellireading. Start with free, unlimited ebook transformation.
         </p>
         <div class="cta-stack">
           <a href="#upload" class="cta-button">Transform Your First Book Free</a>

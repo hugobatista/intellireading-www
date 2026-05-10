@@ -4,13 +4,14 @@
       <div class="footer-content">
         <div class="footer-section">
           <h3>Intellireading</h3>
-          <p>Accelerating reading experiences with advanced reading enhancement technology.</p>
+          <p>Speed reading technology for dyslexia, ADHD, and visual reading guides. Transform your ebooks with Metaguiding.</p>
         </div>
 
         <div class="footer-section">
           <h3>Product</h3>
           <RouterLink to="/#features" class="footer-link">Features</RouterLink>
           <RouterLink to="/#how-it-works" class="footer-link">How It Works</RouterLink>
+          <RouterLink to="/#faq" class="footer-link">FAQ</RouterLink>
           <a
             href="https://go.hugobatista.com/gh/intellireading-calibre-plugins"
             class="footer-link"

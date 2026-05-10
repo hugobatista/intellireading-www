@@ -305,7 +305,8 @@
 }
 
 .metaguided-word {
-  display: inline;
+  display: inline-block;
+  margin-right: 0.25em;
 }
 
 .word-bold {
@@ -632,4 +633,189 @@
   border-radius: 0.5rem;
   display: none;
   font-weight: 500;
+}
+
+/* Hero CTA Group */
+.hero-cta-group {
+  margin-top: 2rem;
+}
+
+.cta-hero-button {
+  display: inline-block;
+  background: var(--white);
+  color: var(--primary-700);
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.125rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--shadow-lg);
+}
+
+.cta-hero-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+}
+
+[data-theme="dark"] .cta-hero-button {
+  background: var(--primary-600);
+  color: var(--white);
+}
+
+[data-theme="dark"] .cta-hero-button:hover {
+  background: var(--primary-700);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .cta-hero-button {
+    background: var(--primary-600);
+    color: var(--white);
+  }
+
+  :root:not([data-theme="light"]) .cta-hero-button:hover {
+    background: var(--primary-700);
+  }
+}
+
+.hero-cta-text {
+  font-size: 0.875rem;
+  opacity: 0.7;
+  margin-top: 1rem;
+}
+
+/* Who This Is For Section */
+.who-this-is-for {
+  padding: 6rem 0;
+  background: var(--white);
+}
+
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.use-case-card {
+  background: var(--gray-50);
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.use-case-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+[data-theme="dark"] .use-case-card {
+  background: var(--gray-100);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .use-case-card {
+    background: var(--gray-100);
+  }
+}
+
+.use-case-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.use-case-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--gray-900);
+}
+
+.use-case-description {
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+/* FAQ Section */
+.faq-section {
+  padding: 6rem 0;
+  background: var(--gray-50);
+}
+
+.faq-list {
+  max-width: 800px;
+  margin: 3rem auto 0;
+}
+
+.faq-item {
+  background: var(--white);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+.faq-item:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+[data-theme="dark"] .faq-item {
+  background: var(--gray-100);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .faq-item {
+    background: var(--gray-100);
+  }
+}
+
+.faq-question {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: 1rem;
+}
+
+.faq-answer {
+  color: var(--gray-600);
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+/* Dark mode text fixes for new sections */
+[data-theme="dark"] .faq-question {
+  color: #f9fafb;
+}
+
+[data-theme="dark"] .faq-answer {
+  color: #d1d5db;
+}
+
+[data-theme="dark"] .use-case-title {
+  color: #f9fafb;
+}
+
+[data-theme="dark"] .use-case-description {
+  color: #d1d5db;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .faq-question {
+    color: #f9fafb;
+  }
+
+  :root:not([data-theme="light"]) .faq-answer {
+    color: #d1d5db;
+  }
+
+  :root:not([data-theme="light"]) .use-case-title {
+    color: #f9fafb;
+  }
+
+  :root:not([data-theme="light"]) .use-case-description {
+    color: #d1d5db;
+  }
 }

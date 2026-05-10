@@ -27,7 +27,7 @@ jobs:
         echo "datetime: $(date '+%Y-%m-%d %H:%M:%S')"
 
     - name: Checkout
-      uses: actions/checkout@v4.1.0
+      uses: actions/checkout@v6.0.2
 
     - name: Get version from package.json
       id: version

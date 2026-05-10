@@ -4,10 +4,6 @@ name: create_draft_release
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'The version for the release'
-        required: true
 
 # set the run-name 
 run-name: ${{ github.ref_name }} -> create_draft_release (
@@ -32,25 +28,38 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v4.1.0
-    
-      
-    #validates that the version is a valid semver
+
+    - name: Get version from package.json
+      id: version
+      run: echo "version=$(jq -r '.version' package.json)" >> "$GITHUB_OUTPUT"
+
+    # validates that the version is a valid semver
     - name: Validate version
-      id: validate_version
       run: |
-        if [[ ! ${{ inputs.version }} =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-          echo "Invalid version: ${{ inputs.version }}"
+        version="${{ steps.version.outputs.version }}"
+        if [[ ! $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          echo "Invalid version: $version"
           exit 1
         fi
 
-    
+    - name: Check release tag does not already exist
+      run: |
+        tag="v${{ steps.version.outputs.version }}"
+        if git ls-remote --tags origin "refs/tags/$tag" | grep -q .; then
+          echo "Tag $tag already exists on origin. Has this version already been released?"
+          exit 1
+        fi
+
     - name: Create release branch
       run: |
-        git checkout -b "release/v${{ inputs.version }}"
-        git push origin "release/v${{ inputs.version }}"
+        git checkout -b "release/v${{ steps.version.outputs.version }}"
+        git push origin "release/v${{ steps.version.outputs.version }}"
 
-    - name: Create DRAFT release through github cli and upload assets
-      env: 
+    - name: Create DRAFT release through GitHub CLI
+      env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |        
-        gh release create v${{ inputs.version }} --title v${{ inputs.version }} --generate-notes --draft
+      run: |
+        gh release create "v${{ steps.version.outputs.version }}" \
+          --title "v${{ steps.version.outputs.version }}" \
+          --generate-notes \
+          --draft

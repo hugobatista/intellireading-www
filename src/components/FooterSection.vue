@@ -59,15 +59,29 @@
 
       <div class="footer-bottom">
         <p>&copy; 2025 Hugo Batista. All rights reserved.</p>
-        <p class="footer-version">v{{ version }}</p>
+        <p class="footer-version">v{{ version }}<span v-if="cliVersion"> — intellireading-cli v{{ cliVersion }}</span></p>
       </div>
     </div>
   </footer>
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import pkg from '../../package.json'
 
 const version = pkg.version
+const cliVersion = ref('')
+
+function onCliVersion(event) {
+  cliVersion.value = event.detail.version
+}
+
+onMounted(() => {
+  document.addEventListener('IntellireadingCliVersion', onCliVersion)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('IntellireadingCliVersion', onCliVersion)
+})
 </script>

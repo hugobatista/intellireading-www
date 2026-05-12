@@ -103,6 +103,10 @@ export function usePyodideUpload({
             fileSizeInfo.value.innerHTML =
               'Supported formats: EPUB / KEPUB (non-DRM)<br>By using the service, you agree to our <a href="/terms" style="color: var(--primary-600);">Terms of Service</a>'
           }
+          if (msg.cliVersion) {
+            const versionEvent = new CustomEvent('IntellireadingCliVersion', { detail: { version: msg.cliVersion } })
+            window.document.dispatchEvent(versionEvent)
+          }
           updateUI('Offline processor ready ✓', 1)
           setTimeout(() => {
             if (localStatus.value) localStatus.value.style.display = 'none'

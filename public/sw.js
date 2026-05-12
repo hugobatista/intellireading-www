@@ -5,8 +5,9 @@
  *   - Python package wheels (from files.pythonhosted.org / pypi.org)
  *   - Same-origin page assets (network-first, cache fallback)
  *
- * Caching strategy for CDN resources:  cache-first on repeat requests,
- * falling back to network.  First visit populates the cache on demand.
+ * Caching strategy for CDN resources:  cache-first with TTL expiry,
+ * falling back to network.  Stale entries are refreshed on the next
+ * request after the TTL window elapses.
  *
  * Caching strategy for same-origin:   network-first, so HTML etc stays fresh
  * while cached assets serve as offline fallback.
@@ -15,8 +16,9 @@
  */
 
 var CACHE = 'intellireading-pyodide-v0.29.4';
+var CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours — CDN assets are refreshed after this window
 
-// CDN prefixes whose responses should always be cached (cache-first on re-visit)
+// CDN prefixes whose responses should always be cached (cache-first with TTL on re-visit)
 var STATIC_CDNS = [
   'https://cdn.jsdelivr.net/pyodide/',
   'https://files.pythonhosted.org/',
@@ -88,24 +90,53 @@ self.addEventListener('fetch', function (event) {
   // --- Everything else: pass through ---
 });
 
-/* ---- Cache-first strategy ---------------------------------------------*/
+/* ---- Cache-first strategy (with TTL expiry) ----------------------------*/
 function cacheFirst(request) {
   return caches.match(request).then(function (cached) {
-    if (cached) return cached;
+    if (!cached) return fetchAndCache(request);
 
-    return fetch(request)
-      .then(function (response) {
+    return isFresh(request).then(function (fresh) {
+      if (fresh) return cached;
+
+      return fetch(request).then(function (response) {
         if (response && response.ok) {
           var clone = response.clone();
           caches.open(CACHE).then(function (cache) {
             cache.put(request, clone);
+            cache.put(request.url + '@ts', new Response(String(Date.now())));
           });
         }
         return response;
-      })
-      .catch(function () {
-        return new Response('Network error', { status: 408 });
+      }).catch(function () {
+        return cached;
       });
+    }).catch(function () {
+      return cached || fetchAndCache(request);
+    });
+  });
+}
+
+function isFresh(request) {
+  return caches.match(request.url + '@ts').then(function (meta) {
+    if (!meta) return false;
+    return meta.text().then(function (ts) {
+      return Date.now() - Number(ts) < CACHE_TTL_MS;
+    });
+  });
+}
+
+function fetchAndCache(request) {
+  return fetch(request).then(function (response) {
+    if (response && response.ok) {
+      var clone = response.clone();
+      caches.open(CACHE).then(function (cache) {
+        cache.put(request, clone);
+        cache.put(request.url + '@ts', new Response(String(Date.now())));
+      });
+    }
+    return response;
+  }).catch(function () {
+    return new Response('Network error', { status: 408 });
   });
 }
 

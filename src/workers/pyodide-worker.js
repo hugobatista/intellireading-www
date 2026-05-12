@@ -53,8 +53,8 @@ self.addEventListener('message', async (event) => {
 
   if (msg.type === 'init') {
     try {
-      await initialize(msg.pyodideCdnUrl)
-      self.postMessage({ type: 'status', status: 'ready' })
+      const cliVersion = await initialize(msg.pyodideCdnUrl)
+      self.postMessage({ type: 'status', status: 'ready', cliVersion })
     } catch (error) {
       console.error('Intellireading Worker: Initialization failed', error)
       self.postMessage({ type: 'error', message: error.message || 'Unknown initialization error' })
@@ -146,5 +146,16 @@ def process_epub(input_bytes):
     throw new Error(`Failed to register processing functions: ${error.message || error}`)
   }
 
+  let cliVersion = ''
+  try {
+    cliVersion = pyodide.runPython(`
+      from importlib.metadata import version
+      version('intellireading-cli')
+    `)
+  } catch (error) {
+    console.warn('Intellireading Worker: Could not determine cli version', error)
+  }
+
   initialized = true
+  return cliVersion
 }

@@ -100,6 +100,21 @@
           </button>
           <div id="error" ref="errorDiv"></div>
         </form>
+
+          <div ref="uploadDonateRef" class="upload-donate">
+            <p>
+              ❤️ Intellireading is free and open source.
+              <a href="https://go.hugobatista.com/donate-intellireading" target="_blank" rel="noopener noreferrer">Support our mission</a>
+              to keep reading tools accessible to everyone.
+            </p>
+          </div>
+
+          <div ref="donateAfterRef" class="donate-after-processing" style="display: none">
+            <div class="donate-after-content">
+              <p>📖 Your metaguided ebook is ready!</p>
+              <p>If you found this useful, please <a href="https://go.hugobatista.com/donate-intellireading" target="_blank" rel="noopener noreferrer" class="donate-link">make a donation</a> to help us keep Intellireading free for everyone. ❤️</p>
+            </div>
+          </div>
       </div>
     </section>
 
@@ -411,6 +426,8 @@ const legacyWarning = ref(null)
 const localCapableMessage = ref(null)
 const fileSizeInfo = ref(null)
 const turnstileContainer = ref(null)
+const uploadDonateRef = ref(null)
+const donateAfterRef = ref(null)
 const submitDisabled = ref(true)
 
 const {
@@ -432,6 +449,8 @@ const {
   localCapableMessage,
   fileSizeInfo,
   turnstileContainer,
+  uploadDonateRef,
+  donateAfterRef,
   submitDisabled,
 })
 

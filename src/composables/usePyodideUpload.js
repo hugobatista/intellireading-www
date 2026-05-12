@@ -11,6 +11,8 @@ export function usePyodideUpload({
   localCapableMessage,
   fileSizeInfo,
   turnstileContainer,
+  uploadDonateRef,
+  donateAfterRef,
   submitDisabled,
 }) {
   let worker = null
@@ -269,6 +271,18 @@ export function usePyodideUpload({
     submitDisabled.value = !(hasFile && (isOfflineReady || isOfflineUnavailable))
   }
 
+  function showDonateAfterProcessing() {
+    if (!donateAfterRef.value) return
+    donateAfterRef.value.style.display = 'block'
+    if (uploadDonateRef.value) uploadDonateRef.value.style.display = 'none'
+  }
+
+  function hideDonateAfterProcessing() {
+    if (!donateAfterRef.value) return
+    donateAfterRef.value.style.display = 'none'
+    if (uploadDonateRef.value) uploadDonateRef.value.style.display = 'block'
+  }
+
   function showCompletionStatus(message, durationMs) {
     if (!localStatus.value) return
     localStatus.value.textContent = message || 'Epub processing complete.'
@@ -353,6 +367,7 @@ export function usePyodideUpload({
         downloadBlob(blob, file.name.replace('.epub', '_metaguided.epub'))
         resetForm()
         showCompletionStatus('Your book has been processed and downloaded successfully!', 4000)
+        showDonateAfterProcessing()
       })
       .catch((error) => {
         console.error('Error:', error)
@@ -389,6 +404,7 @@ export function usePyodideUpload({
           if (legacyWarning.value) legacyWarning.value.style.display = 'none'
 
           showCompletionStatus('Your book has been processed and downloaded successfully!', 4000)
+          showDonateAfterProcessing()
         })
         .catch((error) => {
           console.warn('Intellireading: Local processing failed, using server fallback.', error)
@@ -414,6 +430,7 @@ export function usePyodideUpload({
     clearError()
     showFileInfo(event.target.files[0])
     if (localStatus.value) localStatus.value.style.display = 'none'
+    hideDonateAfterProcessing()
     updateButtonState()
   }
 
@@ -423,6 +440,7 @@ export function usePyodideUpload({
     clearError()
     fileInput.value.files = files
     showFileInfo(files[0])
+    hideDonateAfterProcessing()
     updateButtonState()
     handleDragLeave(event)
   }
